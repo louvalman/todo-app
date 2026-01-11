@@ -1,0 +1,51 @@
+@import url('./fonts/general-sans.css');
+@import url('./fonts/cabinet-grotesk.css');
+
+* {
+    --primary-color: #FDFFF7;
+    --secondary-color: #1b1919;
+    --accent-color: #b6c0e6;
+    font-family: 'CabinetGrotesk-Regular', sans-serif;
+}
+
+body {
+    background: var(--secondary-color);
+    display: grid;
+    grid-template: 100px 400px / 1fr;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2em;
+    padding:0.5em;
+    border: 0.5px solid var(--accent-color);
+    border-radius: 8px;
+}
+
+.btn {
+    background: transparent;
+    color: var(--primary-color);
+    border:none;
+    padding: 0.5em;
+    font-family: 'CabinetGrotesk-Bold';
+    font-size: 20px;
+    font-weight: 700;
+    transition: 0.2s ease-in-out;
+        &&:hover {
+            color: var(--accent-color);
+            cursor: pointer;
+    }
+}
+
+.content {
+    text-align: center;
+    color: var(--primary-color);
+}
