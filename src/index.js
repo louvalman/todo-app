@@ -1,26 +1,27 @@
 import './styles.css';
-import homePage from './pages/home';
-import portfolioPage from './pages/portfolio';
+import todosPage from './pages/todos';
+import projectsPage from './pages/projects';
 import aboutPage from './pages/about';
 import contactPage from './pages/contact';
 import { createButton } from './components/button';
+import { createTodo } from './models/todo';
 
 let nav = document.querySelector('nav');
 let contentWrapper = document.querySelector('.content');
 
-let homeBtn = createButton({
-  label: 'Home',
-  onClick: loadHome,
+let todosBtn = createButton({
+  label: 'Todos',
+  onClick: loadTodos,
   classes: ['btn'],
 });
-nav.appendChild(homeBtn);
+nav.appendChild(todosBtn);
 
-let portfolioBtn = createButton({
-  label: 'Portfolio',
-  onClick: loadPortfolio,
+let projectsBtn = createButton({
+  label: 'Projects',
+  onClick: loadProjects,
   classes: ['btn'],
 });
-nav.appendChild(portfolioBtn);
+nav.appendChild(projectsBtn);
 
 let aboutBtn = createButton({
   label: 'About',
@@ -36,14 +37,14 @@ let contactBtn = createButton({
 });
 nav.appendChild(contactBtn);
 
-function loadHome() {
+function loadTodos() {
   contentWrapper.innerHTML = '';
-  homePage();
+  todosPage();
 }
 
-function loadPortfolio() {
+function loadProjects() {
   contentWrapper.innerHTML = '';
-  portfolioPage();
+  projectsPage();
 }
 
 function loadAbout() {
@@ -56,4 +57,4 @@ function loadContact() {
   contactPage();
 }
 
-homePage();
+todosPage();

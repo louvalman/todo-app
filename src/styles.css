@@ -1,5 +1,5 @@
-@import url('./fonts/general-sans.css');
-@import url('./fonts/cabinet-grotesk.css');
+@import url('./assets/fonts/general-sans.css');
+@import url('./assets/fonts/cabinet-grotesk.css');
 
 * {
     --primary-color: #FDFFF7;
