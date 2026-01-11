@@ -58,3 +58,13 @@ function loadContact() {
 }
 
 todosPage();
+
+const firstTodo = createTodo(
+  'Sample Todo',
+  'This is a sample todo item.',
+  '2024-12-31',
+  'High',
+  'Some notes here.'
+);
+
+console.log('Test Todo Object:', firstTodo);

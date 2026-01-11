@@ -7,7 +7,7 @@ export const createTodo = (
   checklist = []
 ) => {
   // create a unique id for each todo
-  const id = Date.now.toString();
+  const id = Date.now().toString();
 
   // default status is incomplete
   let isComplete = false;
