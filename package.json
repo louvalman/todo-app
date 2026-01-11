@@ -22,6 +22,7 @@
   "homepage": "https://github.com/louvalman/restaurant-page#readme",
   "description": "",
   "devDependencies": {
+    "copy-webpack-plugin": "^13.0.1",
     "css-loader": "^7.1.2",
     "gh-pages": "^6.3.0",
     "html-webpack-plugin": "^5.6.4",
