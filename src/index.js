@@ -39,22 +39,18 @@ let contactBtn = createButton({
 nav.appendChild(contactBtn);
 
 function loadTodos() {
-  contentWrapper.innerHTML = '';
   todosPage(myFirstTasks);
 }
 
 function loadProjects() {
-  contentWrapper.innerHTML = '';
   projectsPage();
 }
 
 function loadAbout() {
-  contentWrapper.innerHTML = '';
   aboutPage();
 }
 
 function loadContact() {
-  contentWrapper.innerHTML = '';
   contactPage();
 }
 
