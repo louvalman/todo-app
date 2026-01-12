@@ -5,6 +5,7 @@ import aboutPage from './pages/about';
 import contactPage from './pages/contact';
 import { createButton } from './components/button';
 import { createTodo } from './models/todo';
+import { createProject } from './models/project';
 
 let nav = document.querySelector('nav');
 let contentWrapper = document.querySelector('.content');
@@ -39,7 +40,7 @@ nav.appendChild(contactBtn);
 
 function loadTodos() {
   contentWrapper.innerHTML = '';
-  todosPage();
+  todosPage(myFirstTasks);
 }
 
 function loadProjects() {
@@ -57,8 +58,6 @@ function loadContact() {
   contactPage();
 }
 
-todosPage();
-
 const firstTodo = createTodo(
   'Sample Todo',
   'This is a sample todo item.',
@@ -66,5 +65,22 @@ const firstTodo = createTodo(
   'High',
   'Some notes here.'
 );
+
+const secondTodo = createTodo(
+  'Sample Todo2',
+  'This is a sample todo item.',
+  '2024-12-31',
+  'High',
+  'Some notes here.'
+);
+
+const myFirstTasks = [firstTodo, secondTodo];
+
+const firstProject = createProject('Sample Project');
+firstProject.addTodo(firstTodo);
+firstProject.addTodo(secondTodo);
+
+console.log('Test Project Name:', firstProject.getName());
+console.log('Test Project Todos:', firstProject.getTodos());
 
 console.log('Test Todo Object:', firstTodo);
