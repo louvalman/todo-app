@@ -10,6 +10,8 @@ import { getDefaultProject, getProjects, addNewProject } from './models/app';
 let nav = document.querySelector('nav');
 let contentWrapper = document.querySelector('.content');
 
+// test git branch strategy working
+
 // initilization and state tracking
 let activeProject = null;
 const defaultProject = getDefaultProject();
