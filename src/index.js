@@ -5,8 +5,7 @@ import aboutPage from './pages/about';
 import contactPage from './pages/contact';
 import { createButton } from './components/button';
 import { createTodo } from './models/todo';
-import { createProject } from './models/project';
-import { getDefaultProject, getProjects } from './models/app';
+import { getDefaultProject, getProjects, addNewProject } from './models/app';
 
 let nav = document.querySelector('nav');
 let contentWrapper = document.querySelector('.content');
@@ -16,23 +15,42 @@ let activeProject = null;
 const defaultProject = getDefaultProject();
 
 // test data
-const demoTodo1 = createTodo('Refactor Code', 'Move state to app.js', 'Today', 'High');
-const demoTodo2 = createTodo('Refactor Code2', 'Move state to app.js2', 'Today2', 'High2');
-const demoTodo3 = createTodo('Refactor Code3', 'Move state to app.js3', 'Today3', 'High3');
-defaultProject.addTodo(demoTodo1);
-defaultProject.addTodo(demoTodo2);
-defaultProject.addTodo(demoTodo3);
+const sampleTodo1 = createTodo(
+  'Sample Todo 1',
+  'This is a sample todo item',
+  '2024-12-31',
+  'High'
+);
+const sampleTodo2 = createTodo(
+  'Sample Todo 2',
+  'This is another sample todo item',
+  '2024-11-30',
+  'Medium'
+);
+defaultProject.addTodo(sampleTodo1);
+defaultProject.addTodo(sampleTodo2);
+
+const sampleProject = addNewProject('Sample Project');
+
+const sampleTodo3 = createTodo(
+  'Project Todo 1',
+  'This is a todo in the sample project',
+  '2024-10-15',
+  'Low'
+);
+sampleProject.addTodo(sampleTodo3);
+getProjects().push(sampleProject);
 
 // view loader and default view declaration
 function switchProjectView(projectToLoad) {
   activeProject = projectToLoad;
   todosPage(activeProject.getTodos());
-};
+}
 
 // nav btns
 let todosBtn = createButton({
-  label: 'Inbox',
-  onClick: () => switchProjectView(defaultProject), 
+  label: 'Todos',
+  onClick: () => switchProjectView(defaultProject),
   classes: ['btn'],
 });
 nav.appendChild(todosBtn);
