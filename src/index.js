@@ -1,16 +1,14 @@
 import './styles.css';
 import todosPage from './pages/todos';
-import projectsPage from './pages/projects';
 import aboutPage from './pages/about';
-import contactPage from './pages/contact';
+import dashboardPage from './pages/dashboard';
 import { createButton } from './components/button';
 import { createTodo } from './models/todo';
 import { getDefaultProject, getProjects, addNewProject } from './models/app';
 
-let nav = document.querySelector('nav');
+let topNav = document.querySelector('nav');
+let sidebar = document.querySelector('.sidebar');
 let contentWrapper = document.querySelector('.content');
-
-// test git branch strategy working
 
 // initilization and state tracking
 let activeProject = null;
@@ -41,7 +39,6 @@ const sampleTodo3 = createTodo(
   'Low'
 );
 sampleProject.addTodo(sampleTodo3);
-getProjects().push(sampleProject);
 
 // view loader and default view declaration
 function switchProjectView(projectToLoad) {
@@ -51,44 +48,51 @@ function switchProjectView(projectToLoad) {
 
 // nav btns
 let todosBtn = createButton({
-  label: 'Todos',
-  onClick: () => switchProjectView(defaultProject),
+  label: 'Dashboard',
+  onClick: loadDashboard,
   classes: ['btn'],
 });
-nav.appendChild(todosBtn);
-
-let projectsBtn = createButton({
-  label: 'Projects',
-  onClick: loadProjects,
-  classes: ['btn'],
-});
-nav.appendChild(projectsBtn);
+topNav.appendChild(todosBtn);
 
 let aboutBtn = createButton({
   label: 'About',
   onClick: loadAbout,
   classes: ['btn'],
 });
-nav.appendChild(aboutBtn);
+topNav.appendChild(aboutBtn);
 
-let contactBtn = createButton({
-  label: 'Contact',
-  onClick: loadContact,
-  classes: ['btn'],
-});
-nav.appendChild(contactBtn);
-
-function loadProjects() {
-  projectsPage();
-}
-
+// about page loader
 function loadAbout() {
   aboutPage();
 }
 
-function loadContact() {
-  contactPage();
+function loadDashboard() {
+  dashboardPage();
+}
+
+// sidebar project buttons
+function renderSidebar() {
+  // 1. Clear the sidebar so it doesn't duplicate items if called multiple times
+  sidebar.innerHTML = '';
+
+  const allProjects = getProjects();
+
+  // 2. Loop through the array and create a button for each
+  allProjects.forEach((project) => {
+    // Optional logic to think about:
+    // Do we want to skip the Default Project here since it's already in the Top Nav?
+    // if (project.id === defaultProject.id) return;
+
+    let projectBtn = createButton({
+      label: project.getName(),
+      onClick: () => switchProjectView(project),
+      classes: ['btn', 'sidebar-project-btn'],
+    });
+
+    sidebar.appendChild(projectBtn);
+  });
 }
 
 // start by showing default project
-switchProjectView(defaultProject);
+renderSidebar();
+loadDashboard();
