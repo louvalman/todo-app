@@ -31,8 +31,8 @@ nav {
     justify-content: center;
     gap: 2em;
     padding:0.5em;
-    border: 0.5px solid var(--accent-color);
-    border-radius: 8px;
+    border-bottom: 0.5px solid var(--accent-color);
+
 }
 
 .sidebar {

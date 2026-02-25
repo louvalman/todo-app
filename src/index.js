@@ -4,7 +4,7 @@ import aboutPage from './pages/about';
 import dashboardPage from './pages/dashboard';
 import { createButton } from './components/button';
 import { createTodo } from './models/todo';
-import { getDefaultProject, getProjects, addNewProject } from './models/app';
+import { getProjects, addNewProject } from './models/app';
 
 let topNav = document.querySelector('nav');
 let sidebar = document.querySelector('.sidebar');
@@ -12,9 +12,10 @@ let contentWrapper = document.querySelector('.content');
 
 // initilization and state tracking
 let activeProject = null;
-const defaultProject = getDefaultProject();
 
-// test data
+// test data project 1
+const sampleProject1 = addNewProject('Sample Project1');
+
 const sampleTodo1 = createTodo(
   'Sample Todo 1',
   'This is a sample todo item',
@@ -27,10 +28,11 @@ const sampleTodo2 = createTodo(
   '2024-11-30',
   'Medium'
 );
-defaultProject.addTodo(sampleTodo1);
-defaultProject.addTodo(sampleTodo2);
+sampleProject1.addTodo(sampleTodo1);
+sampleProject1.addTodo(sampleTodo2);
 
-const sampleProject = addNewProject('Sample Project');
+// test data project 2
+const sampleProject2 = addNewProject('Sample Project2');
 
 const sampleTodo3 = createTodo(
   'Project Todo 1',
@@ -38,7 +40,7 @@ const sampleTodo3 = createTodo(
   '2024-10-15',
   'Low'
 );
-sampleProject.addTodo(sampleTodo3);
+sampleProject2.addTodo(sampleTodo3);
 
 // view loader and default view declaration
 function switchProjectView(projectToLoad) {
@@ -79,10 +81,6 @@ function renderSidebar() {
 
   // 2. Loop through the array and create a button for each
   allProjects.forEach((project) => {
-    // Optional logic to think about:
-    // Do we want to skip the Default Project here since it's already in the Top Nav?
-    // if (project.id === defaultProject.id) return;
-
     let projectBtn = createButton({
       label: project.getName(),
       onClick: () => switchProjectView(project),

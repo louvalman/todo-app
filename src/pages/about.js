@@ -1,12 +1,15 @@
 function aboutPage() {
   let contentWrapper = document.querySelector('.content');
-  let contentHeader = document.createElement('div');
-  let contentTitle = document.createElement('h3');
-  contentWrapper.innerHTML = '';
-  contentTitle.textContent = 'about content';
 
-  contentWrapper.appendChild(contentHeader);
-  contentHeader.appendChild(contentTitle);
+  contentWrapper.innerHTML = '';
+  const title = document.createElement('h2');
+  title.textContent = 'About';
+
+  const placeholder = document.createElement('p');
+  placeholder.textContent =
+    'Eventually, this will show more information about the application and myself. For now, it is just a placeholder.';
+
+  contentWrapper.append(title, placeholder);
 }
 
 export default aboutPage;
