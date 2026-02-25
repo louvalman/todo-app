@@ -1,6 +1,8 @@
 import { createProject } from './project';
 
 // central state - private
+
+// initiatlize list of projects to allow us to have multiple projects
 const projects = [];
 
 // exported functions (the API)
