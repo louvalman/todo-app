@@ -1,38 +1,46 @@
 import './styles.css';
 import todosPage from './pages/todos';
 import aboutPage from './pages/about';
+import dashboardPage from './pages/dashboard';
 import { createButton } from './components/button';
 import { createTodo } from './models/todo';
-import { getDefaultProject, getProjects, addNewProject } from './models/app';
+import { getProjects, addNewProject } from './models/app';
 
-let nav = document.querySelector('nav');
+let topNav = document.querySelector('nav');
+let sidebar = document.querySelector('.sidebar');
+let contentWrapper = document.querySelector('.content');
 
 // initilization and state tracking
 let activeProject = null;
-const defaultProject = getDefaultProject();
 
-// test data
-const demoTodo1 = createTodo(
-  'Refactor Code',
-  'Move state to app.js',
-  'Today',
+// test data project 1
+const sampleProject1 = addNewProject('Sample Project1');
+
+const sampleTodo1 = createTodo(
+  'Sample Todo 1',
+  'This is a sample todo item',
+  '2024-12-31',
   'High'
 );
-const demoTodo2 = createTodo(
-  'Refactor Code2',
-  'Move state to app.js2',
-  'Today2',
-  'High2'
+const sampleTodo2 = createTodo(
+  'Sample Todo 2',
+  'This is another sample todo item',
+  '2024-11-30',
+  'Medium'
 );
-const demoTodo3 = createTodo(
-  'Refactor Code3',
-  'Move state to app.js3',
-  'Today3',
-  'High3'
+sampleProject1.addTodo(sampleTodo1);
+sampleProject1.addTodo(sampleTodo2);
+
+// test data project 2
+const sampleProject2 = addNewProject('Sample Project2');
+
+const sampleTodo3 = createTodo(
+  'Project Todo 1',
+  'This is a todo in the sample project',
+  '2024-10-15',
+  'Low'
 );
-defaultProject.addTodo(demoTodo1);
-defaultProject.addTodo(demoTodo2);
-defaultProject.addTodo(demoTodo3);
+sampleProject2.addTodo(sampleTodo3);
 
 // view loader and default view declaration
 function switchProjectView(projectToLoad) {
@@ -42,44 +50,47 @@ function switchProjectView(projectToLoad) {
 
 // nav btns
 let todosBtn = createButton({
-  label: 'Inbox',
-  onClick: () => switchProjectView(defaultProject),
+  label: 'Dashboard',
+  onClick: loadDashboard,
   classes: ['btn'],
 });
-nav.appendChild(todosBtn);
-
-let projectsBtn = createButton({
-  label: 'Projects',
-  onClick: loadProjects,
-  classes: ['btn'],
-});
-nav.appendChild(projectsBtn);
+topNav.appendChild(todosBtn);
 
 let aboutBtn = createButton({
   label: 'About',
   onClick: loadAbout,
   classes: ['btn'],
 });
-nav.appendChild(aboutBtn);
+topNav.appendChild(aboutBtn);
 
-let contactBtn = createButton({
-  label: 'Contact',
-  onClick: loadContact,
-  classes: ['btn'],
-});
-nav.appendChild(contactBtn);
-
-function loadProjects() {
-  projectsPage();
-}
-
+// about page loader
 function loadAbout() {
   aboutPage();
 }
 
-function loadContact() {
-  contactPage();
+function loadDashboard() {
+  dashboardPage();
+}
+
+// sidebar project buttons
+function renderSidebar() {
+  // 1. Clear the sidebar so it doesn't duplicate items if called multiple times
+  sidebar.innerHTML = '';
+
+  const allProjects = getProjects();
+
+  // 2. Loop through the array and create a button for each
+  allProjects.forEach((project) => {
+    let projectBtn = createButton({
+      label: project.getName(),
+      onClick: () => switchProjectView(project),
+      classes: ['btn', 'sidebar-project-btn'],
+    });
+
+    sidebar.appendChild(projectBtn);
+  });
 }
 
 // start by showing default project
-switchProjectView(defaultProject);
+renderSidebar();
+loadDashboard();

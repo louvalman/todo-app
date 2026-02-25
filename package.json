@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/louvalman/restaurant-page.git"
+    "url": "git+https://github.com/louvalman/todo-app.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/louvalman/restaurant-page/issues"
+    "url": "https://github.com/louvalman/todo-app/issues"
   },
-  "homepage": "https://github.com/louvalman/restaurant-page#readme",
+  "homepage": "https://github.com/louvalman/todo-app#readme",
   "description": "",
   "devDependencies": {
     "copy-webpack-plugin": "^13.0.1",
