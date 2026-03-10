@@ -4,8 +4,13 @@
 * {
     --primary-color: #FDFFF7;
     --secondary-color: #1b1919;
+    --lighter-background: #2a2828;
     --accent-color: #b6c0e6;
     font-family: 'CabinetGrotesk-Regular', sans-serif;
+}
+
+h2 {
+    margin-top:0px;
 }
 
 body {
@@ -78,9 +83,14 @@ nav {
 
 .project-modal {
     top: -30%;
-    background: var(--secondary-color);
+    background: var(--lighter-background);
     height: 200px;
     width: 300px;
+    border: 2px solid var(--accent-color);
+}
+
+.project-modal::backdrop {
+    background: rgba(0, 0, 0, 0.5);
 }
 
 .project-modal[open] {
