@@ -4,6 +4,10 @@ export const createProjectForm = (onSubmit) => {
     const dialog = document.createElement('dialog');
     dialog.classList.add('project-modal');
 
+    const h3 = document.createElement('h3');
+    h3.textContent = 'Create New Project';
+    dialog.appendChild(h3);
+
     const form = document.createElement('form');
     form.classList.add('project-form');
 
@@ -29,22 +33,24 @@ export const createProjectForm = (onSubmit) => {
 
     const cancelBtn = createButton({
         label: 'Cancel',
-        classes: ['btn', 'btn-ghost'],
+        classes: ['btn-ghost'],
         onClick: (e) => {
             e.preventDefault();
+            console.log('closing dialog')
             dialog.close();
         }
     });
 
     const submitBtn = createButton({
         label: 'Create',
-        classes: ['btn', 'btn-primary'],
+        classes: ['btn-primary'],
         onClick: (e) => {
             e.preventDefault();
             const name = input.value.trim();
             if (name) {
                 onSubmit(name);
                 input.value = '';
+                console.log('closing dialog')
                 dialog.close();
             }
         }

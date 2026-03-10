@@ -74,18 +74,19 @@ function loadDashboard() {
   dashboardPage();
 }
 
+// handle new project creation and sync app state
+const projectForm = createProjectForm((projectName) => {
+  const newProject = addNewProject(projectName);
+  renderSidebar();
+  switchProjectView(newProject);
+});
+
+document.body.appendChild(projectForm)
+
 // sidebar with project functionality
 function renderSidebar() {
   // clear the sidebar so it doesn't duplicate items if called multiple times
   sidebar.innerHTML = '';
-
-  // initialize modal form for creating new projects
-  const projectForm = createProjectForm((projectName) => {
-    const newProject = addNewProject(projectName);
-    renderSidebar();
-  });
-
-  document.body.appendChild(projectForm)
 
   // create "New Project" button and add to sidebar
   const newProjectBtn = createButton({
