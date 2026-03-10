@@ -5,10 +5,12 @@ import dashboardPage from './pages/dashboard';
 import { createButton } from './components/button';
 import { createTodo } from './models/todo';
 import { getProjects, addNewProject } from './models/app';
+import { createProjectForm } from './components/projectForm';
 
 let topNav = document.querySelector('nav');
 let sidebar = document.querySelector('.sidebar');
 let contentWrapper = document.querySelector('.content');
+
 
 // initilization and state tracking
 let activeProject = null;
@@ -72,14 +74,32 @@ function loadDashboard() {
   dashboardPage();
 }
 
-// sidebar project buttons
+// sidebar with project functionality
 function renderSidebar() {
-  // 1. Clear the sidebar so it doesn't duplicate items if called multiple times
+  // clear the sidebar so it doesn't duplicate items if called multiple times
   sidebar.innerHTML = '';
+
+  // initialize modal form for creating new projects
+  const projectForm = createProjectForm((projectName) => {
+    const newProject = addNewProject(projectName);
+    renderSidebar();
+  });
+
+  document.body.appendChild(projectForm)
+
+  // create "New Project" button and add to sidebar
+  const newProjectBtn = createButton({
+    label: 'New Project',
+    onClick: () => projectForm.showModal(),
+    classes: ['btn', 'btn-primary'],
+  });
+
+  sidebar.appendChild(newProjectBtn);
+
+  // loop through the array and create a button for each
 
   const allProjects = getProjects();
 
-  // 2. Loop through the array and create a button for each
   allProjects.forEach((project) => {
     let projectBtn = createButton({
       label: project.getName(),
@@ -91,6 +111,6 @@ function renderSidebar() {
   });
 }
 
-// start by showing default project
+// initial render
 renderSidebar();
 loadDashboard();
