@@ -100,6 +100,18 @@ nav {
     height: 18px;
 }
 
+.btn-toggle.completed svg {
+    color: #98c379;
+}
+
+.btn-toggle:hover svg {
+    color: #98c379;
+}
+
+.btn-delete:hover svg {
+    color: #e06c75;
+}
+
 .modal {
     top: -30%;
     background: var(--lighter-background);
@@ -194,6 +206,11 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.todo-card h4.completed {
+    text-decoration: line-through;
+    opacity: 0.5;
 }
 
 .todo-btns {

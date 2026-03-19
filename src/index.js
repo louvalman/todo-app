@@ -46,7 +46,12 @@ sampleProject2.addTodo(sampleTodo3);
 // view loader and default view declaration
 function switchProjectView(projectToLoad) {
   activeProject = projectToLoad;
-  projectView(activeProject.getTodos(), activeProject.getName());
+  const sortedTodos = activeProject.getTodos().sort((a, b) => {
+    return a.getStatus() - b.getStatus();
+  });
+  projectView(sortedTodos, activeProject.getName(), () =>
+    switchProjectView(activeProject),
+  );
 }
 
 // nav btns

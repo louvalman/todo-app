@@ -1,7 +1,7 @@
 import { createButton } from './button';
 import { Check, Trash2 } from 'lucide';
 
-export const createTodoCard = (todo) => {
+export const createTodoCard = (todo, onToggle) => {
   // create the container
   const card = document.createElement('div');
   card.classList.add('todo-card', `priority-${todo.priority.toLowerCase()}`);
@@ -30,8 +30,15 @@ export const createTodoCard = (todo) => {
     onClick: () => {
       todo.toggleComplete();
       toggleBtn.classList.toggle('completed', todo.getStatus());
+      title.classList.toggle('completed', todo.getStatus());
+      onToggle(todo);
     },
   });
+
+  if (todo.getStatus()) {
+    toggleBtn.classList.add('completed');
+    title.classList.add('completed');
+  }
 
   // create delete button
   const deleteBtn = createButton({
