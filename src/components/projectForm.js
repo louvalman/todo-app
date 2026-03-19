@@ -1,64 +1,60 @@
 import { createButton } from './button';
+import { createModal } from './modal';
 
 export const createProjectForm = (onSubmit) => {
-    const dialog = document.createElement('dialog');
-    dialog.classList.add('project-modal');
+  const form = document.createElement('form');
+  form.classList.add('project-form');
 
-    const h3 = document.createElement('h3');
-    h3.textContent = 'Create New Project';
-    dialog.appendChild(h3);
+  // input group
+  const inputGroup = document.createElement('div');
+  inputGroup.classList.add('input-group');
 
-    const form = document.createElement('form');
-    form.classList.add('project-form');
+  const label = document.createElement('label');
+  label.setAttribute('for', 'project-name');
+  label.textContent = 'Project Name';
 
-    // input group
-    const inputGroup = document.createElement('div');
-    inputGroup.classList.add('input-group');
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.id = 'project-name';
+  input.name = 'project-name';
+  input.required = true;
 
-    const label = document.createElement('label');
-    label.setAttribute('for', 'project-name');
-    label.textContent = 'Project Name';
+  inputGroup.append(label, input);
 
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.id = 'project-name';
-    input.name = 'project-name';
-    input.required = true;
+  const projectForm = createModal('Create New Project', form);
 
-    inputGroup.append(label, input);
+  // buttons
+  const btnContainer = document.createElement('div');
+  btnContainer.classList.add('form-actions');
 
-    // buttons
-    const btnContainer = document.createElement('div');
-    btnContainer.classList.add('form-actions');
+  const cancelBtn = createButton({
+    label: 'Cancel',
+    classes: ['btn-ghost'],
+    onClick: (e) => {
+      e.preventDefault();
+      console.log('closing dialog');
+      projectForm.close();
+    },
+  });
 
-    const cancelBtn = createButton({
-        label: 'Cancel',
-        classes: ['btn-ghost'],
-        onClick: (e) => {
-            e.preventDefault();
-            console.log('closing dialog')
-            dialog.close();
-        }
-    });
+  const submitBtn = createButton({
+    label: 'Create',
+    classes: ['btn-primary'],
+    onClick: (e) => {
+      e.preventDefault();
+      const name = input.value.trim();
+      if (name) {
+        onSubmit(name);
+        input.value = '';
+        console.log('closing dialog');
+        projectForm.close();
+      }
+    },
+  });
 
-    const submitBtn = createButton({
-        label: 'Create',
-        classes: ['btn-primary'],
-        onClick: (e) => {
-            e.preventDefault();
-            const name = input.value.trim();
-            if (name) {
-                onSubmit(name);
-                input.value = '';
-                console.log('closing dialog')
-                dialog.close();
-            }
-        }
-    });
+  btnContainer.append(cancelBtn, submitBtn);
+  form.append(inputGroup);
+  projectForm.appendChild(btnContainer);
 
-    btnContainer.append(cancelBtn, submitBtn);
-    form.append(inputGroup, btnContainer);
-    dialog.appendChild(form);
-
-    return dialog;
+  return projectForm;
 };
