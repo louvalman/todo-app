@@ -4,10 +4,10 @@ export const createTodo = (
   dueDate,
   priority,
   notes,
-  checklist = []
+  checklist = [],
 ) => {
   // create a unique id for each todo
-  const id = Date.now().toString();
+  const id = `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 
   // default status is incomplete
   let isComplete = false;

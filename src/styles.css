@@ -5,12 +5,16 @@
     --primary-color: #FDFFF7;
     --secondary-color: #1b1919;
     --lighter-background: #2a2828;
-    --accent-color: #b6c0e6;
+    --accent-color: #dee3f0;
     font-family: 'CabinetGrotesk-Regular', sans-serif;
 }
 
 h2 {
     margin-top:0px;
+}
+
+h4 {
+    margin: 0;
 }
 
 body {
@@ -81,6 +85,21 @@ nav {
     }
 }
 
+.btn-icon {
+    background: transparent;
+    color: var(--primary-color);
+    padding: 0em;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
 .modal {
     top: -30%;
     background: var(--lighter-background);
@@ -132,6 +151,58 @@ nav {
     grid-column: 2 / 3;
     grid-row: 2 / 3;
     padding: 1.5rem;
-    overflow-y: auto; /* Allows scrolling ONLY in the content area if the list gets too long */
+    overflow-y: auto;
     color:var(--primary-color)
+}
+
+.todo-list {
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.todo-card {
+    position: relative;
+    padding-left: 1.2rem;
+}
+
+.todo-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 2px;
+    transform: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.todo-card.priority-high::before {
+    background: #e06c75;
+}
+
+.todo-card.priority-medium::before {
+    background: #e5c07b;
+}
+
+.todo-card.priority-low::before {
+    background: #98c379;
+}
+
+.todo-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.todo-btns {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.todo-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
 }

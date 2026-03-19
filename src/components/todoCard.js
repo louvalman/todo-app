@@ -1,14 +1,50 @@
 import { createButton } from './button';
+import { Check, Trash2 } from 'lucide';
 
 export const createTodoCard = (todo) => {
   // create the container
   const card = document.createElement('div');
-  card.classList.add('todo-card');
+  card.classList.add('todo-card', `priority-${todo.priority.toLowerCase()}`);
   card.setAttribute('data-id', todo.id);
+
+  // create title and buttons container
+  const titleContainer = document.createElement('div');
+  titleContainer.classList.add('todo-title');
+  card.appendChild(titleContainer);
 
   // create title
   const title = document.createElement('h4');
-  title.textContent = todo.title; // Secure! Treats input as text only
+  title.textContent = todo.title;
+  titleContainer.appendChild(title);
+
+  // create todoButtons container
+  const btnContainer = document.createElement('div');
+  btnContainer.classList.add('todo-btns');
+  titleContainer.appendChild(btnContainer);
+
+  // create toggle button
+  const toggleBtn = createButton({
+    label: '',
+    classes: ['btn-icon', 'btn-toggle'],
+    icon: Check,
+    onClick: () => {
+      todo.toggleComplete();
+      toggleBtn.classList.toggle('completed', todo.getStatus());
+    },
+  });
+
+  // create delete button
+  const deleteBtn = createButton({
+    label: '',
+    classes: ['btn-icon', 'btn-delete'],
+    icon: Trash2,
+    onClick: () => {
+      // tbd: implement delete functionality
+      console.log(`Deleting todo: ${todo.id}`);
+    },
+  });
+
+  btnContainer.append(toggleBtn, deleteBtn);
 
   // create description
   const desc = document.createElement('p');
@@ -18,32 +54,8 @@ export const createTodoCard = (todo) => {
   const dueDate = document.createElement('small');
   dueDate.textContent = `Due: ${todo.dueDate}`;
 
-  // create buttons
-  const toggleBtn = createButton({
-    label: todo.getStatus() ? 'Done' : 'Pending',
-    classes: ['btn', 'btn-card', 'btn-toggle'],
-    onClick: () => {
-      todo.toggleComplete();
-      toggleBtn.textContent = todo.getStatus() ? 'Done' : 'Pending';
-    },
-  });
-
-  const deleteBtn = createButton({
-    label: 'Delete',
-    classes: ['btn', 'btn-card', 'btn-delete'],
-    onClick: () => {
-      // tbd: implement delete functionality
-      console.log(`Deleting todo: ${todo.id}`);
-    },
-  });
-
-  // create actions container
-  const actions = document.createElement('div');
-  actions.classList.add('todo-actions');
-
   // append elements
-  actions.append(toggleBtn, deleteBtn);
-  card.append(title, desc, dueDate, actions);
+  card.append(titleContainer, desc, dueDate);
 
   return card;
 };

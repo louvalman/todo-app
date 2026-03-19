@@ -21,7 +21,7 @@ export const createProjectForm = (onSubmit) => {
 
   inputGroup.append(label, input);
 
-  const projectForm = createModal('Create New Project', form);
+  const createProjectModal = createModal('Create New Project', form);
 
   // buttons
   const btnContainer = document.createElement('div');
@@ -33,7 +33,7 @@ export const createProjectForm = (onSubmit) => {
     onClick: (e) => {
       e.preventDefault();
       console.log('closing dialog');
-      projectForm.close();
+      createProjectModal.close();
     },
   });
 
@@ -47,14 +47,14 @@ export const createProjectForm = (onSubmit) => {
         onSubmit(name);
         input.value = '';
         console.log('closing dialog');
-        projectForm.close();
+        createProjectModal.close();
       }
     },
   });
 
   btnContainer.append(cancelBtn, submitBtn);
   form.append(inputGroup);
-  projectForm.appendChild(btnContainer);
+  createProjectModal.appendChild(btnContainer);
 
-  return projectForm;
+  return createProjectModal;
 };

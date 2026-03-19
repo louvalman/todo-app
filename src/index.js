@@ -1,5 +1,5 @@
 import './styles.css';
-import todosPage from './pages/todos';
+import projectView from './pages/projectView';
 import aboutPage from './pages/about';
 import dashboardPage from './pages/dashboard';
 import { createButton } from './components/button';
@@ -11,7 +11,6 @@ let topNav = document.querySelector('nav');
 let sidebar = document.querySelector('.sidebar');
 let contentWrapper = document.querySelector('.content');
 
-
 // initilization and state tracking
 let activeProject = null;
 
@@ -22,13 +21,13 @@ const sampleTodo1 = createTodo(
   'Sample Todo 1',
   'This is a sample todo item',
   '2024-12-31',
-  'High'
+  'High',
 );
 const sampleTodo2 = createTodo(
   'Sample Todo 2',
   'This is another sample todo item',
   '2024-11-30',
-  'Medium'
+  'Medium',
 );
 sampleProject1.addTodo(sampleTodo1);
 sampleProject1.addTodo(sampleTodo2);
@@ -40,14 +39,14 @@ const sampleTodo3 = createTodo(
   'Project Todo 1',
   'This is a todo in the sample project',
   '2024-10-15',
-  'Low'
+  'Low',
 );
 sampleProject2.addTodo(sampleTodo3);
 
 // view loader and default view declaration
 function switchProjectView(projectToLoad) {
   activeProject = projectToLoad;
-  todosPage(activeProject.getTodos());
+  projectView(activeProject.getTodos(), activeProject.getName());
 }
 
 // nav btns
@@ -81,7 +80,7 @@ const projectForm = createProjectForm((projectName) => {
   switchProjectView(newProject);
 });
 
-document.body.appendChild(projectForm)
+document.body.appendChild(projectForm);
 
 // sidebar with project functionality
 function renderSidebar() {
