@@ -1,7 +1,7 @@
 import { createButton } from './button';
 import { Check, Trash2 } from 'lucide';
 
-export const createTodoCard = (todo, onToggle) => {
+export const createTodoCard = (todo, onToggle, activeListContainer, completedListContainer) => {
   // create the container
   const card = document.createElement('div');
   card.classList.add('todo-card', `priority-${todo.priority.toLowerCase()}`);
@@ -31,7 +31,7 @@ export const createTodoCard = (todo, onToggle) => {
       todo.toggleComplete();
       toggleBtn.classList.toggle('completed', todo.getStatus());
       title.classList.toggle('completed', todo.getStatus());
-      onToggle(todo);
+      onToggle(todo, card, activeListContainer, completedListContainer);
     },
   });
 

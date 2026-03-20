@@ -172,6 +172,7 @@ nav {
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    margin-bottom:4rem;
 }
 
 .todo-card {
@@ -183,7 +184,7 @@ nav {
     content: '';
     position: absolute;
     left: 0;
-    top: 2px;
+    top: 4px;
     transform: none;
     width: 10px;
     height: 10px;

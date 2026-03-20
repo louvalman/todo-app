@@ -6,34 +6,70 @@ import autoAnimate from '@formkit/auto-animate';
  */
 
 function projectView(todos = [], projectName, onToggle) {
-  let contentWrapper = document.querySelector('.content');
+  const contentWrapper = document.querySelector('.content');
   contentWrapper.innerHTML = '';
 
+  // page header with project name
   const pageHeader = document.createElement('div');
   pageHeader.classList.add('page-header');
-
   const title = document.createElement('h2');
   title.textContent = projectName;
   pageHeader.appendChild(title);
 
-  const listContainer = document.createElement('div');
-  listContainer.classList.add('todo-list');
-  autoAnimate(listContainer);
+  // active todos list
+  const activeListContainer = document.createElement('div');
+  activeListContainer.classList.add('todo-list');
+  autoAnimate(activeListContainer);
 
-  // if there are no todos, show a message
+  // all completed message - sibling of activeListContainer, not inside it
+  const completedMessage = document.createElement('p');
+  completedMessage.textContent = 'All todos completed! Time to chill out.';
+  completedMessage.style.display = 'none';
+
+  // completed section - title is separate from the animated list
+  const completedSection = document.createElement('div');
+  completedSection.classList.add('completed-section');
+  const completedTitle = document.createElement('h3');
+  completedTitle.textContent = 'Completed todo items';
+  completedTitle.style.display = 'none';
+  const completedListContainer = document.createElement('div');
+  completedListContainer.classList.add('todo-list', 'completed');
+  autoAnimate(completedListContainer);
+  completedSection.append(completedTitle, completedListContainer);
+
+  // wrap onToggle to also update completed title visibility
+  const handleToggle = (todo, card, activeList, completedList) => {
+    onToggle(todo, card, activeList, completedList);
+    completedTitle.style.display =
+      completedListContainer.children.length > 0 ? 'block' : 'none';
+  if (activeListContainer.querySelectorAll('.todo-card').length === 0) {
+  completedMessage.style.display = 'block';
+  } else {
+  completedMessage.style.display = 'none';
+  }
+  };
+
+  // render todos or empty message
   if (todos.length === 0) {
     const emptyMessage = document.createElement('p');
     emptyMessage.textContent = 'No todos yet. Add one! Or chill out.';
-    listContainer.appendChild(emptyMessage);
+    activeListContainer.appendChild(emptyMessage);
   } else {
-    // loop through the data and use the createTodoCard component to create the cards
     todos.forEach((todo) => {
-      const card = createTodoCard(todo, onToggle);
-      listContainer.appendChild(card);
+      const card = createTodoCard(todo, handleToggle, activeListContainer, completedListContainer);
+      if (!todo.getStatus()) {
+        activeListContainer.appendChild(card);
+      } else {
+        completedListContainer.appendChild(card);
+      }
     });
   }
 
-  contentWrapper.append(pageHeader, listContainer);
+  // set initial visibility of completed title
+  completedTitle.style.display =
+    completedListContainer.children.length > 0 ? 'block' : 'none';
+
+  contentWrapper.append(pageHeader, completedMessage, activeListContainer, completedSection);
 }
 
 export default projectView;

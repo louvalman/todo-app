@@ -49,8 +49,13 @@ function switchProjectView(projectToLoad) {
   const sortedTodos = activeProject.getTodos().sort((a, b) => {
     return a.getStatus() - b.getStatus();
   });
-  projectView(sortedTodos, activeProject.getName(), () =>
-    switchProjectView(activeProject),
+  projectView(sortedTodos, activeProject.getName(), (todo, card, activeList, completedList) => {
+  if (todo.getStatus()) {
+    completedList.appendChild(card);
+  } else {
+    activeList.appendChild(card);
+  }
+  }
   );
 }
 
