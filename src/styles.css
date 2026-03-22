@@ -5,12 +5,17 @@
     --primary-color: #FDFFF7;
     --secondary-color: #1b1919;
     --lighter-background: #2a2828;
-    --accent-color: #dee3f0;
+    --accent-color: #addbae;
     font-family: 'CabinetGrotesk-Regular', sans-serif;
 }
 
 h2 {
     margin-top:0;
+}
+
+h3 {
+    font-weight: 700;
+    font-family: 'CabinetGrotesk-Bold';
 }
 
 h4 {
@@ -22,8 +27,9 @@ p {
 }
 
 body {
-    margin: 0;
+    margin: 0 auto;
     height: 100vh;
+    max-width: 1028px;
     background: var(--secondary-color);
     display: grid;
     grid-template-columns: 250px 1fr; 
@@ -32,19 +38,30 @@ body {
 
 header {
     grid-column: 1 / -1;
-    display: flex;
+    display: grid;
+    grid-template-columns: 250px 1fr;
     align-items: center;
-    justify-content: center;
-    padding: 2rem 2rem;
 }
 
 nav {
+    grid-column: 2 / 2;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 2em;
-    padding:0.5em;
-    border-bottom: 0.5px solid var(--accent-color);
+    padding:1.5rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width:100%;
+    margin: 0;
+    color: var(--primary-color);
+    font-family: 'CabinetGrotesk-Bold';
+    font-size: 28px;
+    color:var(--accent-color)
 }
 
 .sidebar {
@@ -55,7 +72,11 @@ nav {
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem; /* Adds neat spacing between your project buttons */
+    gap: 0.5rem;
+}
+
+.sidebar > :first-child {
+    margin-bottom: 1rem;
 }
 
 .btn {
@@ -87,6 +108,40 @@ nav {
             color: var(--secondary-color);
             cursor: pointer;
     }
+}
+
+.btn-secondary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65em;
+    flex-direction: row-reverse; 
+    background: transparent;
+    border: 1px solid var(--accent-color);
+    border-radius: 4px;
+    padding: 0.5em 1em;
+    padding-left:0px;
+    font-family: 'CabinetGrotesk-Bold';
+    font-size: 18px;
+    font-weight: 700;
+    transition: 0.2s ease-in-out;
+        &&:hover {
+            background: var(--accent-color);
+            color: var(--secondary-color);
+            cursor: pointer;
+    }
+}
+
+.sidebar-project-btn {
+font-size:18px;
+}
+
+.sidebar-project-btn.active {
+    color: var(--accent-color);
+}
+
+.nav-btn {
+    font-size: 24px;
 }
 
 .btn-danger {
@@ -190,9 +245,10 @@ nav {
 .content {
     grid-column: 2 / 3;
     grid-row: 2 / 3;
-    padding: 1.5rem;
+    padding: calc(1.5rem + 0.5em);
     overflow-y: auto;
-    color:var(--primary-color)
+    color:var(--primary-color);
+    width: 700px;
 }
 
 .project-wrapper {
@@ -202,20 +258,27 @@ nav {
 .todo-list {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
     margin-bottom:4rem;
 }
 
 .todo-card {
     position: relative;
-    padding-left: 1.2rem;
+    padding: 1rem 1rem 1rem 2rem;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+.todo-card:hover {
+    background: var(--lighter-background);
+    border-radius: 4px;
 }
 
 .todo-card::before {
     content: '';
     position: absolute;
-    left: 0;
-    top: 4px;
+    left: 10.5px;
+    top: 20px;
     transform: none;
     width: 10px;
     height: 10px;
