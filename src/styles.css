@@ -10,10 +10,14 @@
 }
 
 h2 {
-    margin-top:0px;
+    margin-top:0;
 }
 
 h4 {
+    margin: 0;
+}
+
+p {
     margin: 0;
 }
 
@@ -85,6 +89,22 @@ nav {
     }
 }
 
+.btn-danger {
+    background: #e06c75;
+    color: var(--primary-color);
+    border-radius: 4px;
+    padding: 0.5em 1em;
+    font-family: 'CabinetGrotesk-Bold';
+    font-size: 18px;
+    font-weight: 700;
+    transition: 0.2s ease-in-out;
+        &&:hover {
+            background: #c94f5c;
+            color: var(--primary-color);
+            cursor: pointer;
+    }
+}
+
 .btn-icon {
     background: transparent;
     color: var(--primary-color);
@@ -115,8 +135,7 @@ nav {
 .modal {
     top: -30%;
     background: var(--lighter-background);
-    height: 200px;
-    width: 300px;
+    width: 400px;
 }
 
 .modal::backdrop {
@@ -140,6 +159,14 @@ nav {
     justify-content: space-between;
 }
 
+.modal .delete-project-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    color: var(--primary-color);
+}
+
 .modal .input-group {
     display: flex;
     flex-direction: column;
@@ -157,6 +184,7 @@ nav {
     display: flex;
     justify-content: flex-end;
     gap: 0.5rem;
+    margin-top: 2rem;
 }
 
 .content {
@@ -167,8 +195,11 @@ nav {
     color:var(--primary-color)
 }
 
+.project-wrapper {
+    max-width: 700px;
+}
+
 .todo-list {
-    max-width: 400px;
     display: flex;
     flex-direction: column;
     gap: 2rem;

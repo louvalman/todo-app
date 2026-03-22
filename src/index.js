@@ -4,7 +4,7 @@ import aboutPage from './pages/about';
 import dashboardPage from './pages/dashboard';
 import { createButton } from './components/button';
 import { createTodo } from './models/todo';
-import { getProjects, addNewProject } from './models/app';
+import { getProjects, addNewProject, deleteProject } from './models/app';
 import { createProjectForm } from './components/projectForm';
 
 let topNav = document.querySelector('nav');
@@ -49,13 +49,26 @@ function switchProjectView(projectToLoad) {
   const sortedTodos = activeProject.getTodos().sort((a, b) => {
     return a.getStatus() - b.getStatus();
   });
-  projectView(sortedTodos, activeProject.getName(), (todo, card, activeList, completedList) => {
-  if (todo.getStatus()) {
-    completedList.appendChild(card);
-  } else {
-    activeList.appendChild(card);
-  }
-  }
+  projectView(
+    sortedTodos,
+    activeProject.getName(),
+    (todo, card, activeList, completedList) => {
+      if (todo.getStatus()) {
+        completedList.appendChild(card);
+      } else {
+        activeList.appendChild(card);
+      }
+    },
+    () => {
+      console.log(
+        'deleting project:',
+        activeProject.id,
+        activeProject.getName(),
+      );
+      deleteProject(activeProject.id);
+      renderSidebar();
+      loadDashboard();
+    },
   );
 }
 
