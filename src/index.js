@@ -69,6 +69,17 @@ function switchProjectView(projectToLoad) {
       renderSidebar();
       loadDashboard();
     },
+    (todoData) => {
+      const newTodo = createTodo(
+        todoData.title,
+        todoData.description,
+        todoData.dueDate,
+        todoData.priority,
+        todoData.notes,
+      );
+      activeProject.addTodo(newTodo);
+      switchProjectView(activeProject);
+    },
   );
 }
 
