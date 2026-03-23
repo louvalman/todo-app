@@ -2,6 +2,7 @@ import { createTodoCard } from '../components/todoCard';
 import { createButton } from '../components/button';
 import { createModal } from '../components/modal';
 import { createTodoForm } from '../components/todoForm';
+import { Plus } from 'lucide';
 import autoAnimate from '@formkit/auto-animate';
 
 /**
@@ -143,7 +144,8 @@ function projectView(todos = [], projectName, onToggle, onDelete, onAddTodo) {
   // add todo button
   const addTodoBtn = createButton({
     label: 'Add Todo',
-    classes: ['btn', 'btn-primary'],
+    classes: ['btn', 'btn-secondary'],
+    icon: Plus,
     onClick: () => {
       todoFormModal.showModal();
     },

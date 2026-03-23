@@ -1,13 +1,6 @@
 import { createButton } from './button';
 import { createTodoForm } from './todoForm';
-import {
-  createElement,
-  Check,
-  Pencil,
-  Trash2,
-  ChevronDown,
-  ChevronUp,
-} from 'lucide';
+import { createElement, Check, Pencil, Trash2, ChevronDown } from 'lucide';
 
 export const createTodoCard = (
   todo,
@@ -30,6 +23,18 @@ export const createTodoCard = (
   // create title
   const title = document.createElement('h4');
   title.textContent = todo.getTitle();
+
+  // priority pill
+  const priorityPill = document.createElement('span');
+  priorityPill.classList.add(
+    'priority-pill',
+    `priority-${todo.getPriority().toLowerCase()}`,
+  );
+  priorityPill.textContent = todo.getPriority();
+
+  const titlePillContainer = document.createElement('div');
+  titlePillContainer.classList.add('title-pill-container');
+  titlePillContainer.append(title, priorityPill);
 
   // create buttons container
   const btnContainer = document.createElement('div');
@@ -62,7 +67,7 @@ export const createTodoCard = (
   });
 
   btnContainer.append(toggleBtn, expandBtn);
-  titleContainer.append(title, btnContainer);
+  titleContainer.append(titlePillContainer, btnContainer);
 
   // create description
   const desc = document.createElement('p');
@@ -135,13 +140,8 @@ export const createTodoCard = (
 
   // toggle helper - defined after expandedSection exists
   const toggleExpand = () => {
-    const isOpen = expandedSection.classList.contains('open');
     expandedSection.classList.toggle('open');
-    const svg = expandBtn.querySelector('svg');
-    if (svg)
-      svg.replaceWith(
-        createElement(isOpen ? ChevronDown : ChevronUp, { size: 18 }),
-      );
+    expandBtn.classList.toggle('open');
   };
 
   // wire up expand button and card click

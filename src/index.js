@@ -183,7 +183,7 @@ function renderSidebar() {
   const newProjectBtn = createButton({
     label: 'New Project',
     onClick: () => projectForm.showModal(),
-    classes: ['btn', 'btn-secondary', 'plus-icon-btn'],
+    classes: ['btn', 'btn-secondary', 'pl-0'],
     icon: Plus,
   });
 

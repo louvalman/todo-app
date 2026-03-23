@@ -5,7 +5,7 @@
     --primary-color: #FDFFF7;
     --secondary-color: #1b1919;
     --lighter-background: #2a2828;
-    --accent-color: #addbae;
+    --accent-color: #abd5b0;
     font-family: 'CabinetGrotesk-Regular', sans-serif;
 }
 
@@ -125,10 +125,10 @@ nav {
     gap: 0.65em;
     flex-direction: row-reverse; 
     background: transparent;
-    border: 1px solid var(--accent-color);
+    border: 1px solid var(--primary-color);
     border-radius: 4px;
     padding: 0.5em 1em;
-    padding-left:0px;
+    padding-left: 0.5em;
     font-family: 'CabinetGrotesk-Bold';
     font-size: 18px;
     font-weight: 700;
@@ -136,8 +136,13 @@ nav {
         &&:hover {
             background: var(--accent-color);
             color: var(--secondary-color);
+            border-color: var(--accent-color);
             cursor: pointer;
     }
+}
+
+.pl-0 {
+    padding-left: 0;
 }
 
 .sidebar-project-btn {
@@ -153,8 +158,14 @@ font-size:18px;
 }
 
 .btn-danger {
-    background: #e06c75;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65em;
+    flex-direction: row-reverse;
+    background: transparent;
     color: var(--primary-color);
+    border: 1px solid #e06c75;
     border-radius: 4px;
     padding: 0.5em 1em;
     font-family: 'CabinetGrotesk-Bold';
@@ -267,6 +278,10 @@ font-size:18px;
     max-width: 700px;
 }
 
+.page-header {
+    margin-left:1rem;
+}
+
 .todo-list {
     display: flex;
     flex-direction: column;
@@ -275,8 +290,7 @@ font-size:18px;
 }
 
 .todo-card {
-    position: relative;
-    padding: 1rem 1rem 1rem 2rem;
+    padding: 1rem;
     cursor: pointer;
     transition: background 0.2s ease-in-out;
 }
@@ -284,29 +298,6 @@ font-size:18px;
 .todo-card:hover {
     background: var(--lighter-background);
     border-radius: 4px;
-}
-
-.todo-card::before {
-    content: '';
-    position: absolute;
-    left: 10.5px;
-    top: 20px;
-    transform: none;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-}
-
-.todo-card.priority-high::before {
-    background: #e06c75;
-}
-
-.todo-card.priority-medium::before {
-    background: #e5c07b;
-}
-
-.todo-card.priority-low::before {
-    background: #98c379;
 }
 
 .todo-title {
@@ -318,6 +309,36 @@ font-size:18px;
 .todo-card h4.completed {
     text-decoration: line-through;
     opacity: 0.5;
+}
+
+.priority-pill {
+    display: inline-block;
+    padding: 0.1em 0.6em;
+    border-radius: 99px;
+    font-size: 12px;
+    font-family: 'CabinetGrotesk-Bold';
+}
+
+.priority-pill.priority-high {
+    background: #e06c75;
+    color: var(--primary-color);
+}
+
+.priority-pill.priority-medium {
+    background: #e5c07b;
+    color: var(--secondary-color);
+}
+
+.priority-pill.priority-low {
+    background: #98c379;
+    color: var(--secondary-color);
+}
+
+.title-pill-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .todo-btns {
@@ -352,7 +373,7 @@ font-size:18px;
 .expanded-actions {
     display: flex;
     justify-content: flex-start;
-    gap:1em;
+    gap:0.5em;
 }
 
 .expanded-btn {
@@ -368,4 +389,13 @@ font-size:18px;
 .expanded-btn svg {
     position: relative;
     bottom: 1px;
+}
+
+.btn-expand svg {
+    transition: transform 0.3s ease-in-out;
+}
+
+.btn-expand.open svg {
+    transform: rotate(180deg);
+    color: var(--accent-color);
 }
