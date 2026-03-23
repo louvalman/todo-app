@@ -318,3 +318,11 @@ font-size:18px;
     gap: 0.5rem;
     margin-top: 0.5rem;
 }
+
+.expanded-section {
+    display: none;
+}
+
+.expanded-section.open {
+    display: block;
+}
