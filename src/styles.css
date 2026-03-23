@@ -26,6 +26,10 @@ p {
     margin: 0;
 }
 
+a{
+    text-decoration: none;
+}
+
 body {
     margin: 0 auto;
     height: 100vh;
@@ -58,10 +62,14 @@ nav {
     justify-content: center;
     width:100%;
     margin: 0;
-    color: var(--primary-color);
     font-family: 'CabinetGrotesk-Bold';
     font-size: 28px;
-    color:var(--accent-color)
+    color:var(--accent-color);
+    cursor: pointer;
+        transition: 0.2s ease-in-out;
+            &&:hover {
+                color: var(--primary-color);
+        }
 }
 
 .sidebar {
