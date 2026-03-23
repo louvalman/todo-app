@@ -304,6 +304,7 @@ font-size:18px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 0.5rem;
 }
 
 .todo-card h4.completed {
@@ -312,11 +313,14 @@ font-size:18px;
 }
 
 .priority-pill {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: 0.1em 0.6em;
     border-radius: 99px;
     font-size: 12px;
     font-family: 'CabinetGrotesk-Bold';
+    padding-top:0.3em;
 }
 
 .priority-pill.priority-high {
