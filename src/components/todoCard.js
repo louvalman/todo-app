@@ -1,5 +1,13 @@
 import { createButton } from './button';
-import { createElement, Check, Trash2, ChevronDown, ChevronUp } from 'lucide';
+import { createTodoForm } from './todoForm';
+import {
+  createElement,
+  Check,
+  Pencil,
+  Trash2,
+  ChevronDown,
+  ChevronUp,
+} from 'lucide';
 
 export const createTodoCard = (
   todo,
@@ -9,7 +17,10 @@ export const createTodoCard = (
 ) => {
   // create the container
   const card = document.createElement('div');
-  card.classList.add('todo-card', `priority-${todo.priority.toLowerCase()}`);
+  card.classList.add(
+    'todo-card',
+    `priority-${todo.getPriority().toLowerCase()}`,
+  );
   card.setAttribute('data-id', todo.id);
 
   // create title and buttons container
@@ -18,7 +29,7 @@ export const createTodoCard = (
 
   // create title
   const title = document.createElement('h4');
-  title.textContent = todo.title;
+  title.textContent = todo.getTitle();
 
   // create buttons container
   const btnContainer = document.createElement('div');
@@ -55,11 +66,11 @@ export const createTodoCard = (
 
   // create description
   const desc = document.createElement('p');
-  desc.textContent = todo.description;
+  desc.textContent = todo.getDescription();
 
   // create due date
   const dueDate = document.createElement('small');
-  dueDate.textContent = `Due: ${todo.dueDate}`;
+  dueDate.textContent = `Due: ${todo.getDueDate()}`;
 
   // expand section (hidden by default via css)
   const expandedSection = document.createElement('div');
@@ -68,36 +79,74 @@ export const createTodoCard = (
   // notes
   const notes = document.createElement('div');
   notes.classList.add('todo-notes');
-  notes.textContent = todo.notes || 'No additional notes.';
+  notes.textContent = todo.getNotes() || 'No additional notes.';
+
+  // edit button
+  const editBtn = createButton({
+    label: 'Edit',
+    classes: ['btn-icon', 'btn-edit', 'expanded-btn'],
+    icon: Pencil,
+    onClick: (e) => {
+      e.stopPropagation();
+
+      // remove existing edit modal if present
+      const existingEditModal = document.querySelector(
+        '.modal.edit-todo-modal',
+      );
+      if (existingEditModal) existingEditModal.remove();
+
+      const editForm = createTodoForm((todoData) => {
+        todo.update(todoData);
+        // update DOM elements directly
+        title.textContent = todo.getTitle();
+        desc.textContent = todo.getDescription();
+        dueDate.textContent = `Due: ${todo.getDueDate()}`;
+        notes.textContent = todo.getNotes() || 'No additional notes.';
+        // update priority dot
+        card.className = '';
+        card.classList.add(
+          'todo-card',
+          `priority-${todo.getPriority().toLowerCase()}`,
+        );
+      }, todo);
+
+      editForm.classList.add('edit-todo-modal');
+      document.body.appendChild(editForm);
+      editForm.showModal();
+    },
+  });
 
   // delete button
   const deleteBtn = createButton({
-    label: '',
-    classes: ['btn-icon', 'btn-delete'],
+    label: 'Delete',
+    classes: ['btn-icon', 'btn-delete', 'expanded-btn'],
     icon: Trash2,
     onClick: () => {
       console.log(`Deleting todo: ${todo.id}`);
     },
   });
 
-  expandedSection.append(notes, deleteBtn);
+  // expanded actions container
+  const expandedActions = document.createElement('div');
+  expandedActions.classList.add('expanded-actions');
+  expandedActions.append(editBtn, deleteBtn);
+
+  expandedSection.append(notes, expandedActions);
 
   // toggle helper - defined after expandedSection exists
   const toggleExpand = () => {
     const isOpen = expandedSection.classList.contains('open');
     expandedSection.classList.toggle('open');
     const svg = expandBtn.querySelector('svg');
-    if (svg) console.log('expandBtn contents:', expandBtn.innerHTML);
-    console.log('svg found:', expandBtn.querySelector('svg'));
-    svg.replaceWith(
-      createElement(isOpen ? ChevronDown : ChevronUp, { size: 18 }),
-    );
+    if (svg)
+      svg.replaceWith(
+        createElement(isOpen ? ChevronDown : ChevronUp, { size: 18 }),
+      );
   };
 
   // wire up expand button and card click
   expandBtn.addEventListener('click', (e) => {
     e.stopPropagation();
-    console.log('expandBtn listener fired');
     toggleExpand();
   });
   card.addEventListener('click', (e) => {

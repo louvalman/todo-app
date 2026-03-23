@@ -191,8 +191,12 @@ font-size:18px;
     color: #98c379;
 }
 
-.btn-delete:hover svg {
+.btn-delete svg {
     color: #e06c75;
+}
+
+.btn-delete:hover svg {
+    color: #c94f5c;
 }
 
 .modal {
@@ -328,9 +332,40 @@ font-size:18px;
 }
 
 .expanded-section {
-    display: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+    padding-top: 0;
 }
 
 .expanded-section.open {
-    display: block;
+    max-height: 200px;
+}
+
+.todo-notes {
+    margin-bottom: 1rem;
+    font-size: 14px;
+    opacity: 0.8;
+        padding-top: 1rem;
+}
+
+.expanded-actions {
+    display: flex;
+    justify-content: flex-start;
+    gap:1em;
+}
+
+.expanded-btn {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 14px;
+    padding: 0.25em 0.5em;
+}
+
+.expanded-btn svg {
+    position: relative;
+    bottom: 1px;
 }

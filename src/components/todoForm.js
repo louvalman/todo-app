@@ -1,7 +1,7 @@
 import { createButton } from './button';
 import { createModal } from './modal';
 
-export const createTodoForm = (onSubmit) => {
+export const createTodoForm = (onSubmit, existingTodo = null) => {
   const todoForm = document.createElement('form');
   todoForm.classList.add('project-form');
 
@@ -77,7 +77,19 @@ export const createTodoForm = (onSubmit) => {
     notesInput,
   );
 
-  const createTodoModal = createModal('Create New Todo', todoForm);
+  // pre-fill inputs if editing an existing todo
+  if (existingTodo) {
+    nameInput.value = existingTodo.getTitle();
+    descriptionInput.value = existingTodo.getDescription();
+    dateInput.value = existingTodo.getDueDate();
+    prioritySelect.value = existingTodo.getPriority().toLowerCase();
+    notesInput.value = existingTodo.getNotes() || '';
+  }
+
+  const modalTitle = existingTodo ? 'Edit Todo' : 'Create New Todo';
+  const submitLabel = existingTodo ? 'Save' : 'Create';
+
+  const createTodoModal = createModal(modalTitle, todoForm);
 
   // buttons
   const btnContainer = document.createElement('div');
@@ -94,7 +106,7 @@ export const createTodoForm = (onSubmit) => {
   });
 
   const submitBtn = createButton({
-    label: 'Create',
+    label: submitLabel,
     classes: ['btn-primary'],
     onClick: (e) => {
       e.preventDefault();
