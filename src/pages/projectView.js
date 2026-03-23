@@ -24,6 +24,37 @@ function projectView(todos = [], projectName, onToggle, onDelete, onAddTodo) {
   title.textContent = projectName;
   pageHeader.appendChild(title);
 
+  // filter and sort helper function
+  let currentFilter = []; // empty array = show all priorities
+  let currentSort = 'default'; // 'default', 'dueDate', 'priority'
+
+  const getFilteredAndSortedTodos = () => {
+    let result = todos.filter((todo) => !todo.getStatus());
+
+    // apply priority filter if any selected
+    if (currentFilter.length > 0) {
+      result = result.filter((todo) =>
+        currentFilter.includes(todo.getPriority().toLowerCase()),
+      );
+    }
+
+    // apply sort
+    if (currentSort === 'dueDate') {
+      result.sort(
+        (a, b) => new Date(a.getDueDate()) - new Date(b.getDueDate()),
+      );
+    } else if (currentSort === 'priority') {
+      const order = { high: 0, medium: 1, low: 2 };
+      result.sort(
+        (a, b) =>
+          order[a.getPriority().toLowerCase()] -
+          order[b.getPriority().toLowerCase()],
+      );
+    }
+
+    return result;
+  };
+
   // active todos list
   const activeListContainer = document.createElement('div');
   activeListContainer.classList.add('todo-list');
