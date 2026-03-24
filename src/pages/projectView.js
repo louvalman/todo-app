@@ -2,7 +2,8 @@ import { createTodoCard } from '../components/todoCard';
 import { createButton } from '../components/button';
 import { createModal } from '../components/modal';
 import { createTodoForm } from '../components/todoForm';
-import { Plus } from 'lucide';
+import { createDropdown } from '../components/dropdown';
+import { ListFilter, Plus, ArrowUpDown } from 'lucide';
 import autoAnimate from '@formkit/auto-animate';
 
 /**
@@ -22,7 +23,6 @@ function projectView(todos = [], projectName, onToggle, onDelete, onAddTodo) {
   pageHeader.classList.add('page-header');
   const title = document.createElement('h2');
   title.textContent = projectName;
-  pageHeader.appendChild(title);
 
   // filter and sort helper function
   let currentFilter = []; // empty array = show all priorities
@@ -41,7 +41,7 @@ function projectView(todos = [], projectName, onToggle, onDelete, onAddTodo) {
     // apply sort
     if (currentSort === 'dueDate') {
       result.sort(
-        (a, b) => new Date(a.getDueDate()) - new Date(b.getDueDate()),
+        (a, b) => new Date(b.getDueDate()) - new Date(a.getDueDate()),
       );
     } else if (currentSort === 'priority') {
       const order = { high: 0, medium: 1, low: 2 };
@@ -54,6 +54,42 @@ function projectView(todos = [], projectName, onToggle, onDelete, onAddTodo) {
 
     return result;
   };
+
+  // filter and sort dropdowns
+  const filterSortContainer = document.createElement('div');
+  filterSortContainer.classList.add('filter-sort-container');
+
+  const filterDropdown = createDropdown({
+    label: 'Filter',
+    options: [
+      { label: 'High', value: 'high' },
+      { label: 'Medium', value: 'medium' },
+      { label: 'Low', value: 'low' },
+    ],
+    multiSelect: true,
+    onChange: (values) => {
+      currentFilter = values;
+      renderTodos(); // re-render with new filter
+    },
+    icon: ListFilter,
+  });
+
+  const sortDropdown = createDropdown({
+    label: 'Sort',
+    options: [
+      { label: 'Default', value: 'default' },
+      { label: 'Due Date', value: 'dueDate' },
+      { label: 'Priority', value: 'priority' },
+    ],
+    onChange: (value) => {
+      currentSort = value;
+      renderTodos(); // re-render with new filter
+    },
+    icon: ArrowUpDown,
+  });
+
+  filterSortContainer.append(filterDropdown, sortDropdown);
+  pageHeader.append(title, filterSortContainer);
 
   // active todos list
   const activeListContainer = document.createElement('div');
@@ -112,6 +148,30 @@ function projectView(todos = [], projectName, onToggle, onDelete, onAddTodo) {
   // set initial visibility of completed title
   completedTitle.style.display =
     completedListContainer.children.length > 0 ? 'block' : 'none';
+
+  // render todos after filter or sort changes
+  const renderTodos = () => {
+  autoAnimate(activeListContainer, { duration: 0 }); // disable animation
+  activeListContainer.innerHTML = '';
+  const filtered = getFilteredAndSortedTodos();
+
+  if (filtered.length === 0) {
+    const emptyMessage = document.createElement('p');
+    emptyMessage.textContent = 'No todos match your filters.';
+    activeListContainer.appendChild(emptyMessage);
+    } else {
+      filtered.forEach((todo) => {
+        const card = createTodoCard(
+          todo,
+          handleToggle,
+          activeListContainer,
+          completedListContainer,
+        );
+        activeListContainer.appendChild(card);
+      });
+    }
+    autoAnimate(activeListContainer); // re-enable with default duration
+  };
 
   // delete project modal content
   const deleteBtnContent = document.createElement('div');
