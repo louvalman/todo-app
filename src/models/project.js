@@ -16,7 +16,7 @@ export const createProject = (name) => {
 
   // find a todo and remove it using its id
   const removeTodo = (todoId) => {
-    todos.filter((t) => t.id !== todoId);
+    todos = todos.filter((t) => t.id !== todoId);
   };
 
   return {

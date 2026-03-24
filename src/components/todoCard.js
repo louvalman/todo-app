@@ -1,4 +1,5 @@
 import { createButton } from './button';
+import { createModal } from './modal';
 import { createTodoForm } from './todoForm';
 import { createElement, Check, Pencil, Trash2, ChevronDown } from 'lucide';
 
@@ -7,6 +8,7 @@ export const createTodoCard = (
   onToggle,
   activeListContainer,
   completedListContainer,
+  onDelete,
 ) => {
   // create the container
   const card = document.createElement('div');
@@ -107,10 +109,10 @@ export const createTodoCard = (
         desc.textContent = todo.getDescription();
         dueDate.textContent = `Due: ${todo.getDueDate()}`;
         notes.textContent = todo.getNotes() || 'No additional notes.';
-        // update priority dot
-        card.className = '';
-        card.classList.add(
-          'todo-card',
+        priorityPill.textContent = todo.getPriority();
+        priorityPill.className = '';
+        priorityPill.classList.add(
+          'priority-pill',
           `priority-${todo.getPriority().toLowerCase()}`,
         );
       }, todo);
@@ -126,8 +128,46 @@ export const createTodoCard = (
     label: 'Delete',
     classes: ['btn-icon', 'btn-delete', 'expanded-btn'],
     icon: Trash2,
-    onClick: () => {
-      console.log(`Deleting todo: ${todo.id}`);
+    onClick: (e) => {
+      e.stopPropagation();
+
+      // remove existing delete modal if present
+      const existingDeleteModal = document.querySelector(
+        '.modal.delete-todo-modal',
+      );
+      if (existingDeleteModal) existingDeleteModal.remove();
+
+      const deleteModalContent = document.createElement('div');
+      deleteModalContent.textContent =
+        'Are you sure you want to delete this todo?';
+      deleteModalContent.classList.add('delete-modal-content');
+
+      const deleteModal = createModal('Delete Todo', deleteModalContent);
+      deleteModal.classList.add('delete-todo-modal');
+
+      const cancelBtn = createButton({
+        label: 'Cancel',
+        classes: ['btn-ghost'],
+        onClick: () => {
+          deleteModal.close();
+        },
+      });
+
+      const confirmDeleteBtn = createButton({
+        label: 'Delete',
+        classes: ['btn-danger'],
+        onClick: () => {
+          deleteModal.close();
+          onDelete(todo.id);
+        },
+      });
+
+      const btnContainer = document.createElement('div');
+      btnContainer.classList.add('form-actions');
+      btnContainer.append(cancelBtn, confirmDeleteBtn);
+      deleteModal.appendChild(btnContainer);
+      document.body.appendChild(deleteModal);
+      deleteModal.showModal();
     },
   });
 

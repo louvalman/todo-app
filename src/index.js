@@ -16,6 +16,7 @@ let contentWrapper = document.querySelector('.content');
 let activeProject = null;
 
 // test data
+// test data
 const workProject = addNewProject('Work');
 workProject.addTodo(
   createTodo(
@@ -42,6 +43,23 @@ workProject.addTodo(
     'Low',
   ),
 );
+workProject.addTodo(
+  createTodo(
+    'Schedule 1-on-1s with team',
+    'Monthly check-ins with direct reports',
+    '2026-03-27',
+    'Medium',
+    'Prepare talking points beforehand',
+  ),
+);
+workProject.addTodo(
+  createTodo(
+    'Renew software licences',
+    'Adobe, Figma and JetBrains all expire in April',
+    '2026-04-05',
+    'High',
+  ),
+);
 
 const homeProject = addNewProject('Home');
 homeProject.addTodo(
@@ -53,7 +71,12 @@ homeProject.addTodo(
   ),
 );
 homeProject.addTodo(
-  createTodo('Book dentist appointment', '', '2026-04-10', 'Medium'),
+  createTodo(
+    'Book dentist appointment',
+    'Overdue by 3 months',
+    '2026-04-10',
+    'Medium',
+  ),
 );
 homeProject.addTodo(
   createTodo(
@@ -70,6 +93,15 @@ homeProject.addTodo(
     'Policy expires end of April',
     '2026-04-30',
     'High',
+  ),
+);
+homeProject.addTodo(
+  createTodo(
+    'Plant spring herbs',
+    'Basil, mint and rosemary on the windowsill',
+    '2026-04-12',
+    'Low',
+    'Buy soil and small pots from the market',
   ),
 );
 
@@ -97,6 +129,58 @@ learningProject.addTodo(
     'Build a small layout exercise',
     '2026-04-12',
     'Low',
+  ),
+);
+learningProject.addTodo(
+  createTodo(
+    'Watch Fireship video on TypeScript',
+    'Get a high-level overview before diving deeper',
+    '2026-03-29',
+    'Low',
+  ),
+);
+learningProject.addTodo(
+  createTodo(
+    'Set up ESLint and Prettier',
+    'Enforce consistent code style across all projects',
+    '2026-04-03',
+    'Medium',
+    'Use Airbnb config as a base',
+  ),
+);
+
+const fitnessProject = addNewProject('Fitness');
+fitnessProject.addTodo(
+  createTodo(
+    'Book swimming lane',
+    'Wednesday evenings at the local pool',
+    '2026-03-26',
+    'Medium',
+  ),
+);
+fitnessProject.addTodo(
+  createTodo(
+    'Research 5k training plan',
+    'Looking for a 6-week beginner programme',
+    '2026-03-28',
+    'Low',
+    'Check Strava and Nike Run Club',
+  ),
+);
+fitnessProject.addTodo(
+  createTodo(
+    'Buy new running shoes',
+    'Current ones are worn out',
+    '2026-04-01',
+    'High',
+  ),
+);
+fitnessProject.addTodo(
+  createTodo(
+    'Schedule physio appointment',
+    'Left knee has been sore after long runs',
+    '2026-03-27',
+    'High',
   ),
 );
 
@@ -138,6 +222,10 @@ function switchProjectView(projectToLoad) {
       activeProject.addTodo(newTodo);
       switchProjectView(activeProject);
     },
+    (todoId) => {
+      activeProject.removeTodo(todoId);
+      switchProjectView(activeProject);
+    },
   );
 }
 
@@ -158,10 +246,14 @@ topNav.appendChild(aboutBtn);
 
 // about page loader
 function loadAbout() {
+  activeProject = null;
+  renderSidebar();
   aboutPage();
 }
 
 function loadDashboard() {
+  activeProject = null;
+  renderSidebar();
   dashboardPage();
 }
 
