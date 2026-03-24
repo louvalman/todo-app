@@ -100,6 +100,7 @@ function projectView(todos = [], projectName, onToggle, onDelete, onAddTodo) {
   const completedMessage = document.createElement('p');
   completedMessage.textContent = 'All todos completed! Time to chill out.';
   completedMessage.style.display = 'none';
+  completedMessage.classList.add('completed-message');
 
   // completed section - title is separate from the animated list
   const completedSection = document.createElement('div');
@@ -128,6 +129,7 @@ function projectView(todos = [], projectName, onToggle, onDelete, onAddTodo) {
   if (todos.length === 0) {
     const emptyMessage = document.createElement('p');
     emptyMessage.textContent = 'No todos yet. Add one! Or chill out.';
+    emptyMessage.classList.add('empty-message');
     activeListContainer.appendChild(emptyMessage);
   } else {
     todos.forEach((todo) => {
@@ -151,14 +153,14 @@ function projectView(todos = [], projectName, onToggle, onDelete, onAddTodo) {
 
   // render todos after filter or sort changes
   const renderTodos = () => {
-  autoAnimate(activeListContainer, { duration: 0 }); // disable animation
-  activeListContainer.innerHTML = '';
-  const filtered = getFilteredAndSortedTodos();
+    autoAnimate(activeListContainer, { duration: 0 }); // disable animation
+    activeListContainer.innerHTML = '';
+    const filtered = getFilteredAndSortedTodos();
 
-  if (filtered.length === 0) {
-    const emptyMessage = document.createElement('p');
-    emptyMessage.textContent = 'No todos match your filters.';
-    activeListContainer.appendChild(emptyMessage);
+    if (filtered.length === 0) {
+      const emptyMessage = document.createElement('p');
+      emptyMessage.textContent = 'No todos match your filters.';
+      activeListContainer.appendChild(emptyMessage);
     } else {
       filtered.forEach((todo) => {
         const card = createTodoCard(

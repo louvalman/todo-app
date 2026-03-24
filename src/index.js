@@ -179,16 +179,6 @@ function renderSidebar() {
   // clear the sidebar so it doesn't duplicate items if called multiple times
   sidebar.innerHTML = '';
 
-  // create "New Project" button and add to sidebar
-  const newProjectBtn = createButton({
-    label: 'New Project',
-    onClick: () => projectForm.showModal(),
-    classes: ['btn', 'btn-secondary', 'pl-0'],
-    icon: Plus,
-  });
-
-  sidebar.appendChild(newProjectBtn);
-
   // loop through the array and create a button for each
 
   const allProjects = getProjects();
@@ -206,6 +196,16 @@ function renderSidebar() {
 
     sidebar.appendChild(projectBtn);
   });
+
+  // create "New Project" button and add to sidebar
+  const newProjectBtn = createButton({
+    label: 'New Project',
+    onClick: () => projectForm.showModal(),
+    classes: ['btn', 'btn-secondary', 'pl-0'],
+    icon: Plus,
+  });
+
+  sidebar.appendChild(newProjectBtn);
 }
 
 // initial render
