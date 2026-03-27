@@ -2,6 +2,7 @@ import './styles.css';
 import projectView from './pages/projectView';
 import aboutPage from './pages/about';
 import dashboardPage from './pages/dashboard';
+import { saveToStorage, loadFromStorage } from './models/app';
 import { createButton } from './components/button';
 import { createTodo } from './models/todo';
 import { getProjects, addNewProject, deleteProject } from './models/app';
@@ -15,176 +16,175 @@ let contentWrapper = document.querySelector('.content');
 // initilization and state tracking
 let activeProject = null;
 
-// test data
-// test data
-const workProject = addNewProject('Work');
-workProject.addTodo(
-  createTodo(
-    'Prepare Q2 presentation',
-    'Slides for the quarterly review meeting',
-    '2026-04-15',
-    'High',
-    'Include budget overview and team updates',
-  ),
-);
-workProject.addTodo(
-  createTodo(
-    'Review pull requests',
-    'Go through open PRs on the main repo',
-    '2026-03-25',
-    'Medium',
-  ),
-);
-workProject.addTodo(
-  createTodo(
-    'Update project documentation',
-    'Reflect recent architecture changes in the docs',
-    '2026-04-01',
-    'Low',
-  ),
-);
-workProject.addTodo(
-  createTodo(
-    'Schedule 1-on-1s with team',
-    'Monthly check-ins with direct reports',
-    '2026-03-27',
-    'Medium',
-    'Prepare talking points beforehand',
-  ),
-);
-workProject.addTodo(
-  createTodo(
-    'Renew software licences',
-    'Adobe, Figma and JetBrains all expire in April',
-    '2026-04-05',
-    'High',
-  ),
-);
+// // test data
+// const workProject = addNewProject('Work');
+// workProject.addTodo(
+//   createTodo(
+//     'Prepare Q2 presentation',
+//     'Slides for the quarterly review meeting',
+//     '2026-04-15',
+//     'High',
+//     'Include budget overview and team updates',
+//   ),
+// );
+// workProject.addTodo(
+//   createTodo(
+//     'Review pull requests',
+//     'Go through open PRs on the main repo',
+//     '2026-03-25',
+//     'Medium',
+//   ),
+// );
+// workProject.addTodo(
+//   createTodo(
+//     'Update project documentation',
+//     'Reflect recent architecture changes in the docs',
+//     '2026-04-01',
+//     'Low',
+//   ),
+// );
+// workProject.addTodo(
+//   createTodo(
+//     'Schedule 1-on-1s with team',
+//     'Monthly check-ins with direct reports',
+//     '2026-03-27',
+//     'Medium',
+//     'Prepare talking points beforehand',
+//   ),
+// );
+// workProject.addTodo(
+//   createTodo(
+//     'Renew software licences',
+//     'Adobe, Figma and JetBrains all expire in April',
+//     '2026-04-05',
+//     'High',
+//   ),
+// );
 
-const homeProject = addNewProject('Home');
-homeProject.addTodo(
-  createTodo(
-    'Fix kitchen faucet',
-    'Dripping when turned off — needs new washer',
-    '2026-03-28',
-    'High',
-  ),
-);
-homeProject.addTodo(
-  createTodo(
-    'Book dentist appointment',
-    'Overdue by 3 months',
-    '2026-04-10',
-    'Medium',
-  ),
-);
-homeProject.addTodo(
-  createTodo(
-    'Clean out garage',
-    'Sort boxes and donate unused items',
-    '2026-04-20',
-    'Low',
-    'Check if old bike is worth keeping',
-  ),
-);
-homeProject.addTodo(
-  createTodo(
-    'Renew home insurance',
-    'Policy expires end of April',
-    '2026-04-30',
-    'High',
-  ),
-);
-homeProject.addTodo(
-  createTodo(
-    'Plant spring herbs',
-    'Basil, mint and rosemary on the windowsill',
-    '2026-04-12',
-    'Low',
-    'Buy soil and small pots from the market',
-  ),
-);
+// const homeProject = addNewProject('Home');
+// homeProject.addTodo(
+//   createTodo(
+//     'Fix kitchen faucet',
+//     'Dripping when turned off — needs new washer',
+//     '2026-03-28',
+//     'High',
+//   ),
+// );
+// homeProject.addTodo(
+//   createTodo(
+//     'Book dentist appointment',
+//     'Overdue by 3 months',
+//     '2026-04-10',
+//     'Medium',
+//   ),
+// );
+// homeProject.addTodo(
+//   createTodo(
+//     'Clean out garage',
+//     'Sort boxes and donate unused items',
+//     '2026-04-20',
+//     'Low',
+//     'Check if old bike is worth keeping',
+//   ),
+// );
+// homeProject.addTodo(
+//   createTodo(
+//     'Renew home insurance',
+//     'Policy expires end of April',
+//     '2026-04-30',
+//     'High',
+//   ),
+// );
+// homeProject.addTodo(
+//   createTodo(
+//     'Plant spring herbs',
+//     'Basil, mint and rosemary on the windowsill',
+//     '2026-04-12',
+//     'Low',
+//     'Buy soil and small pots from the market',
+//   ),
+// );
 
-const learningProject = addNewProject('Learning');
-learningProject.addTodo(
-  createTodo(
-    'Finish Odin todo app',
-    'Implement localStorage and remaining features',
-    '2026-03-30',
-    'High',
-  ),
-);
-learningProject.addTodo(
-  createTodo(
-    'Read YDKJS: Async & Performance',
-    'Focus on promises and async/await chapters',
-    '2026-04-05',
-    'Medium',
-    'Take notes on event loop section',
-  ),
-);
-learningProject.addTodo(
-  createTodo(
-    'Practice CSS Grid',
-    'Build a small layout exercise',
-    '2026-04-12',
-    'Low',
-  ),
-);
-learningProject.addTodo(
-  createTodo(
-    'Watch Fireship video on TypeScript',
-    'Get a high-level overview before diving deeper',
-    '2026-03-29',
-    'Low',
-  ),
-);
-learningProject.addTodo(
-  createTodo(
-    'Set up ESLint and Prettier',
-    'Enforce consistent code style across all projects',
-    '2026-04-03',
-    'Medium',
-    'Use Airbnb config as a base',
-  ),
-);
+// const learningProject = addNewProject('Learning');
+// learningProject.addTodo(
+//   createTodo(
+//     'Finish Odin todo app',
+//     'Implement localStorage and remaining features',
+//     '2026-03-30',
+//     'High',
+//   ),
+// );
+// learningProject.addTodo(
+//   createTodo(
+//     'Read YDKJS: Async & Performance',
+//     'Focus on promises and async/await chapters',
+//     '2026-04-05',
+//     'Medium',
+//     'Take notes on event loop section',
+//   ),
+// );
+// learningProject.addTodo(
+//   createTodo(
+//     'Practice CSS Grid',
+//     'Build a small layout exercise',
+//     '2026-04-12',
+//     'Low',
+//   ),
+// );
+// learningProject.addTodo(
+//   createTodo(
+//     'Watch Fireship video on TypeScript',
+//     'Get a high-level overview before diving deeper',
+//     '2026-03-29',
+//     'Low',
+//   ),
+// );
+// learningProject.addTodo(
+//   createTodo(
+//     'Set up ESLint and Prettier',
+//     'Enforce consistent code style across all projects',
+//     '2026-04-03',
+//     'Medium',
+//     'Use Airbnb config as a base',
+//   ),
+// );
 
-const fitnessProject = addNewProject('Fitness');
-fitnessProject.addTodo(
-  createTodo(
-    'Book swimming lane',
-    'Wednesday evenings at the local pool',
-    '2026-03-26',
-    'Medium',
-  ),
-);
-fitnessProject.addTodo(
-  createTodo(
-    'Research 5k training plan',
-    'Looking for a 6-week beginner programme',
-    '2026-03-28',
-    'Low',
-    'Check Strava and Nike Run Club',
-  ),
-);
-fitnessProject.addTodo(
-  createTodo(
-    'Buy new running shoes',
-    'Current ones are worn out',
-    '2026-04-01',
-    'High',
-  ),
-);
-fitnessProject.addTodo(
-  createTodo(
-    'Schedule physio appointment',
-    'Left knee has been sore after long runs',
-    '2026-03-27',
-    'High',
-  ),
-);
+// const fitnessProject = addNewProject('Fitness');
+// fitnessProject.addTodo(
+//   createTodo(
+//     'Book swimming lane',
+//     'Wednesday evenings at the local pool',
+//     '2026-03-26',
+//     'Medium',
+//   ),
+// );
+// fitnessProject.addTodo(
+//   createTodo(
+//     'Research 5k training plan',
+//     'Looking for a 6-week beginner programme',
+//     '2026-03-28',
+//     'Low',
+//     'Check Strava and Nike Run Club',
+//   ),
+// );
+// fitnessProject.addTodo(
+//   createTodo(
+//     'Buy new running shoes',
+//     'Current ones are worn out',
+//     '2026-04-01',
+//     'High',
+//   ),
+// );
+// fitnessProject.addTodo(
+//   createTodo(
+//     'Schedule physio appointment',
+//     'Left knee has been sore after long runs',
+//     '2026-03-27',
+//     'High',
+//   ),
+// );
 
-// view loader and default view declaration
+// load a project into the main view and wire up all project/todo action callbacks
 function switchProjectView(projectToLoad) {
   activeProject = projectToLoad;
   renderSidebar();
@@ -202,12 +202,8 @@ function switchProjectView(projectToLoad) {
       }
     },
     () => {
-      console.log(
-        'deleting project:',
-        activeProject.id,
-        activeProject.getName(),
-      );
       deleteProject(activeProject.id);
+      saveToStorage();
       renderSidebar();
       loadDashboard();
     },
@@ -220,10 +216,12 @@ function switchProjectView(projectToLoad) {
         todoData.notes,
       );
       activeProject.addTodo(newTodo);
+      saveToStorage();
       switchProjectView(activeProject);
     },
     (todoId) => {
       activeProject.removeTodo(todoId);
+      saveToStorage();
       switchProjectView(activeProject);
     },
   );
@@ -260,6 +258,7 @@ function loadDashboard() {
 // handle new project creation and sync app state
 const projectForm = createProjectForm((projectName) => {
   const newProject = addNewProject(projectName);
+  saveToStorage();
   renderSidebar();
   switchProjectView(newProject);
 });
@@ -301,5 +300,6 @@ function renderSidebar() {
 }
 
 // initial render
+loadFromStorage();
 renderSidebar();
 loadDashboard();

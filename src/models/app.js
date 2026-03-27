@@ -1,4 +1,5 @@
 import { createProject } from './project';
+import { createTodo } from './todo';
 
 // central state - private
 
@@ -28,4 +29,51 @@ export const deleteProject = (id) => {
 // find a project by ID
 export const getProjectById = (id) => {
   return projects.find((project) => project.id === id);
+};
+
+// save projects to local storage
+export const saveToStorage = () => {
+  localStorage.setItem(
+    'projects',
+    JSON.stringify(
+      getProjects().map((project) => ({
+        id: project.id,
+        name: project.getName(),
+        todos: project.getTodos().map((todo) => ({
+          id: todo.id,
+          title: todo.getTitle(),
+          description: todo.getDescription(),
+          dueDate: todo.getDueDate(),
+          priority: todo.getPriority(),
+          notes: todo.getNotes(),
+          checklist: todo.checklist,
+          isComplete: todo.getStatus(),
+        })),
+      })),
+    ),
+  );
+};
+
+// load projects from local storage
+export const loadFromStorage = () => {
+  const storedProjects = JSON.parse(localStorage.getItem('projects')) || [];
+  projects = storedProjects.map((projectData) => {
+    const project = createProject(projectData.name, projectData.id);
+
+    projectData.todos.forEach((todoData) => {
+      const todo = createTodo(
+        todoData.title,
+        todoData.description,
+        todoData.dueDate,
+        todoData.priority,
+        todoData.notes,
+        todoData.checklist,
+        todoData.id,
+      );
+      if (todoData.isComplete) todo.toggleComplete();
+      project.addTodo(todo);
+    });
+
+    return project;
+  });
 };

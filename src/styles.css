@@ -317,6 +317,10 @@ font-size:18px;
     margin-left: 1rem;
 }
 
+.completed-section {
+    margin-top: 2rem;
+}
+
 .completed-section h3 {
     margin-left: 1rem;
 }
@@ -407,6 +411,10 @@ font-size:18px;
     cursor: pointer;
 }
 
+.dropdown-option span {
+    margin-top: 3px;
+}
+
 .dropdown-option input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
@@ -420,9 +428,19 @@ font-size:18px;
     transition: 0.2s ease-in-out;
 }
 
-.dropdown-option input[type="checkbox"]:checked {
-    background: var(--accent-color);
-    border-color: var(--accent-color);
+.dropdown-option input[type="checkbox"]:checked::after {
+    content: '';
+    display: block;
+    width: 3px;
+    height: 6px;
+    border: 1.25px solid var(--accent-color);
+    background:transparent;
+    border-top: none;
+    border-left: none;
+    transform: rotate(45deg);
+    position: relative;
+    left: 2.3px;
+    top: 0px;
 }
 
 .todo-list {

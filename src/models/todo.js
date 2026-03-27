@@ -5,9 +5,11 @@ export const createTodo = (
   priority,
   notes,
   checklist = [],
+  existingId = null,
 ) => {
   // create a unique id for each todo
-  const id = `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+  const id =
+    existingId || `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 
   // default status is incomplete
   let isComplete = false;

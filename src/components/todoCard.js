@@ -1,6 +1,7 @@
 import { createButton } from './button';
 import { createModal } from './modal';
 import { createTodoForm } from './todoForm';
+import { saveToStorage } from '../models/app';
 import { createElement, Check, Pencil, Trash2, ChevronDown } from 'lucide';
 
 export const createTodoCard = (
@@ -49,6 +50,7 @@ export const createTodoCard = (
     icon: Check,
     onClick: () => {
       todo.toggleComplete();
+      saveToStorage();
       toggleBtn.classList.toggle('completed', todo.getStatus());
       title.classList.toggle('completed', todo.getStatus());
       onToggle(todo, card, activeListContainer, completedListContainer);
@@ -104,6 +106,7 @@ export const createTodoCard = (
 
       const editForm = createTodoForm((todoData) => {
         todo.update(todoData);
+        saveToStorage();
         // update DOM elements directly
         title.textContent = todo.getTitle();
         desc.textContent = todo.getDescription();

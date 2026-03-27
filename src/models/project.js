@@ -1,6 +1,6 @@
-export const createProject = (name) => {
-  const id = `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
-
+export const createProject = (name, existingId = null) => {
+  const id =
+    existingId || `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
   // a private array that'll only be accessible via the method below
   let todos = [];
 
