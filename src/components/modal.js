@@ -6,6 +6,10 @@ export const createModal = (title, content) => {
   dialogTitle.classList.add('dialog-header');
   dialogTitle.textContent = title;
 
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) dialog.close();
+  });
+
   dialog.appendChild(dialogTitle);
   dialog.appendChild(content);
 

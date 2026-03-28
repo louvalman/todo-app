@@ -10,7 +10,7 @@
     --secondary-color: #1b1919;
     --lighter-background: #2a2828;
     --muted-color: #c1ccc3;
-    --accent-color: #b8d6c3;
+    --accent-color: #a3c4af;
     --danger-color: #e06c75;
     --danger-hover-color: #c94f5c;
     --priority-high: #e06c75;
@@ -327,6 +327,7 @@ nav {
     padding: 0.5em;
     border: none;
     border-radius: 4px;
+    background: var(--muted-color);
 }
 
 .input-field-group {
