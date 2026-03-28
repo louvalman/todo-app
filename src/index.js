@@ -75,7 +75,7 @@ let aboutBtn = createButton({
 });
 topNav.appendChild(aboutBtn);
 
-// about page loader
+// dashboard and about page loader
 function loadAbout() {
   activeProject = null;
   renderSidebar();
@@ -87,6 +87,9 @@ function loadDashboard() {
   renderSidebar();
   dashboardPage((project) => switchProjectView(project), addTestData);
 }
+
+const logo = document.querySelector('.logo');
+logo.addEventListener('click', loadDashboard);
 
 // handle new project creation and sync app state
 const projectForm = createProjectForm((projectName) => {
