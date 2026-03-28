@@ -112,7 +112,7 @@ nav {
 .sidebar {
     grid-column: 1 / 2;
     grid-row: 2 / 3;
-    border-right: 1px solid var(--accent-color);
+    border-right: 2px solid var(--lighter-background);;
     height: fit-content;
     padding: calc(1rem + 0.75em) calc(2.5rem + 0.5em);
     display: flex;
@@ -743,4 +743,25 @@ nav {
 .expanded-btn svg {
     position: relative;
     bottom: 1px;
+}
+
+/* ================================
+   scrollbar
+   ================================ */
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--lighter-background);
+    border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--muted-color);
 }
