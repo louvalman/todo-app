@@ -49,7 +49,7 @@ function dashboardPage(onProjectSelect, onAddTestData) {
 
   const contentContainer = document.createElement('div');
   contentContainer.classList.add('content-container');
-  autoAnimate(contentContainer);
+  autoAnimate(contentContainer, { duration: 600, easing: 'ease-out' });
 
   // get all todos from all projects
   const allTodos = getProjects().flatMap((project) => project.getTodos());
@@ -67,6 +67,7 @@ function dashboardPage(onProjectSelect, onAddTestData) {
   // stats container
   const statsContainer = document.createElement('div');
   statsContainer.classList.add('stats-container');
+  autoAnimate(statsContainer);
 
   statsContainer.append(
     createStatCard('Total Tasks', totalTodos),

@@ -100,7 +100,7 @@ function projectView(
 
   // active todos list
   const activeListContainer = document.createElement('div');
-  activeListContainer.classList.add('todo-list');
+  activeListContainer.classList.add('todo-list', 'gap-1');
   autoAnimate(activeListContainer);
 
   // all completed message - sibling of activeListContainer, not inside it

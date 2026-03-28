@@ -20,7 +20,7 @@ function aboutPage() {
 
   const description = document.createElement('p');
   description.textContent =
-    'Todo is an app designed to help you manage your projects and tasks. It is built using vanilla JavaScript, HTML, and CSS, with a focus on simplicity and ease of use. The app allows you to create multiple projects, add tasks with due dates and priorities, and keep track of your progress.';
+    'This is an app designed to help you manage your projects and tasks. It is built using vanilla JavaScript, HTML, and CSS, with a focus on simplicity and ease of use. The app allows you to create multiple projects, add tasks with due dates and priorities, and keep track of your progress.';
 
   const githubLink = document.createElement('a');
   githubLink.href = 'https://github.com/louvalman';
