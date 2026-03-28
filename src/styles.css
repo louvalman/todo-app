@@ -608,7 +608,7 @@ nav {
 }
 
 .gap-1 {
-    gap: rem;
+    gap: 1rem;
 }
 
 .todo-item {
