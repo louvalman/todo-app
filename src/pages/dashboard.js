@@ -13,9 +13,13 @@ function dashboardPage(onProjectSelect, onAddTestData) {
 
   const getGreeting = () => {
     const hour = new Date().getHours();
+    if (hour < 5) return 'Good evening';
+    if (hour < 9) return 'Good morning, early bird';
     if (hour < 12) return 'Good morning';
+    if (hour < 13) return 'Almost lunchtime';
     if (hour < 18) return 'Good afternoon';
-    return 'Good evening';
+    if (hour < 21) return 'Good evening';
+    return 'Winding down?';
   };
 
   const title = document.createElement('h3');
