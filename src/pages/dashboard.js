@@ -1,6 +1,8 @@
 import { getProjects, getProjectById } from '../models/app';
 import { createButton } from '../components/button';
 import { createStatCard } from '../components/statCard';
+import { format, isPast, isToday } from 'date-fns';
+import autoAnimate from '@formkit/auto-animate';
 
 function dashboardPage(onProjectSelect, onAddTestData) {
   const contentWrapper = document.querySelector('.content');
@@ -9,8 +11,15 @@ function dashboardPage(onProjectSelect, onAddTestData) {
   const dashboardWrapper = document.createElement('div');
   dashboardWrapper.classList.add('dashboard-wrapper');
 
-  const title = document.createElement('h2');
-  title.textContent = 'Dashboard';
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Good morning';
+    if (hour < 18) return 'Good afternoon';
+    return 'Good evening';
+  };
+
+  const title = document.createElement('h3');
+  title.textContent = `${getGreeting()}, here’s your overview`;
 
   const clearBtn = createButton({
     label: 'Clear Data',
@@ -36,7 +45,11 @@ function dashboardPage(onProjectSelect, onAddTestData) {
 
   const titleRow = document.createElement('div');
   titleRow.classList.add('title-row');
-  titleRow.append(title, btnContainer);
+  titleRow.append(title);
+
+  const contentContainer = document.createElement('div');
+  contentContainer.classList.add('content-container');
+  autoAnimate(contentContainer);
 
   // get all todos from all projects
   const allTodos = getProjects().flatMap((project) => project.getTodos());
@@ -75,11 +88,8 @@ function dashboardPage(onProjectSelect, onAddTestData) {
   );
 
   // sort by priority
-  const priorityOrder = { High: 0, Medium: 1, Low: 2 };
-
   allTodosWithProject.sort(
-    (a, b) =>
-      priorityOrder[a.todo.getPriority()] - priorityOrder[b.todo.getPriority()],
+    (a, b) => new Date(a.todo.getDueDate()) - new Date(b.todo.getDueDate()),
   );
 
   // todo list
@@ -113,14 +123,34 @@ function dashboardPage(onProjectSelect, onAddTestData) {
     projectLabel.classList.add('todo-project-label');
 
     const dueDate = document.createElement('small');
-    dueDate.textContent = `Due: ${new Date(todo.getDueDate()).toLocaleDateString()}`;
+    if (todo.getDueDate()) {
+      const date = new Date(todo.getDueDate());
+      if (isToday(date)) {
+        dueDate.textContent = 'Due today';
+        dueDate.classList.add('due-today');
+      } else if (isPast(date)) {
+        dueDate.textContent = `Overdue — ${format(date, 'MMM d, yyyy')}`;
+        dueDate.classList.add('due-overdue');
+      } else {
+        dueDate.textContent = `Due: ${format(date, 'MMM d, yyyy')}`;
+      }
+    } else {
+      dueDate.textContent = 'No due date';
+      dueDate.classList.add('due-none');
+    }
 
     titleRow.append(titleEl, priorityPill);
     todoItem.append(titleRow, projectLabel, dueDate);
     todoList.appendChild(todoItem);
   });
 
-  dashboardWrapper.append(titleRow, statsContainer, todoList);
+  dashboardWrapper.append(
+    titleRow,
+    statsContainer,
+    contentContainer,
+    btnContainer,
+  );
+  contentContainer.append(todoList);
   contentWrapper.appendChild(dashboardWrapper);
 }
 

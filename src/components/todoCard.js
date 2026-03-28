@@ -2,7 +2,8 @@ import { createButton } from './button';
 import { createModal } from './modal';
 import { createTodoForm } from './todoForm';
 import { saveToStorage } from '../models/app';
-import { createElement, Check, Pencil, Trash2, ChevronDown } from 'lucide';
+import { Check, Pencil, Trash2, ChevronDown } from 'lucide';
+import { format, isPast, isToday } from 'date-fns';
 
 export const createTodoCard = (
   todo,
@@ -79,7 +80,21 @@ export const createTodoCard = (
 
   // create due date
   const dueDate = document.createElement('small');
-  dueDate.textContent = `Due: ${todo.getDueDate()}`;
+  if (todo.getDueDate()) {
+    const date = new Date(todo.getDueDate());
+    if (isToday(date)) {
+      dueDate.textContent = 'Due today';
+      dueDate.classList.add('due-today');
+    } else if (isPast(date)) {
+      dueDate.textContent = `Overdue — ${format(date, 'MMM d, yyyy')}`;
+      dueDate.classList.add('due-overdue');
+    } else {
+      dueDate.textContent = `Due: ${format(date, 'MMM d, yyyy')}`;
+    }
+  } else {
+    dueDate.textContent = 'No due date';
+    dueDate.classList.add('due-none');
+  }
 
   // expand section (hidden by default via css)
   const expandedSection = document.createElement('div');

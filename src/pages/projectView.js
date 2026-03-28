@@ -48,7 +48,7 @@ function projectView(
     // apply sort
     if (currentSort === 'dueDate') {
       result.sort(
-        (a, b) => new Date(b.getDueDate()) - new Date(a.getDueDate()),
+        (a, b) => new Date(a.getDueDate()) - new Date(b.getDueDate()),
       );
     } else if (currentSort === 'priority') {
       const order = { high: 0, medium: 1, low: 2 };
