@@ -31,7 +31,7 @@ function dashboardPage(onProjectSelect, onAddTestData) {
   });
 
   const addDataBtn = createButton({
-    label: 'Add Data',
+    label: 'Add Test Data',
     classes: ['btn-small'],
     onClick: () => {
       onAddTestData();
