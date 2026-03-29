@@ -7,7 +7,9 @@
     "dev": "webpack serve --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "lint": "eslint src/**/*.js",
+    "format": "prettier --write src/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -22,10 +24,15 @@
   "homepage": "https://github.com/louvalman/todo-app#readme",
   "description": "",
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "copy-webpack-plugin": "^13.0.1",
     "css-loader": "^7.1.2",
+    "eslint": "^10.1.0",
+    "eslint-config-prettier": "^10.1.8",
     "gh-pages": "^6.3.0",
+    "globals": "^17.4.0",
     "html-webpack-plugin": "^5.6.4",
+    "prettier": "^3.8.1",
     "style-loader": "^4.0.0",
     "webpack": "^5.102.1",
     "webpack-cli": "^6.0.1",
