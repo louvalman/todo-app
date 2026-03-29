@@ -8,11 +8,9 @@ import { createTodo } from './models/todo';
 import { getProjects, addNewProject, deleteProject } from './models/app';
 import { createProjectForm } from './components/projectForm';
 import { Plus } from 'lucide';
-import { add } from 'date-fns';
 
 let topNav = document.querySelector('nav');
 let sidebar = document.querySelector('.sidebar');
-let contentWrapper = document.querySelector('.content');
 
 // initilization and state tracking
 let activeProject = null;
@@ -85,7 +83,14 @@ function loadAbout() {
 function loadDashboard() {
   activeProject = null;
   renderSidebar();
-  dashboardPage((project) => switchProjectView(project), addTestData);
+  dashboardPage(
+    (project) => switchProjectView(project),
+    addTestData,
+    () => {
+      renderSidebar();
+      loadDashboard();
+    },
+  );
 }
 
 const logo = document.querySelector('.logo');
@@ -309,5 +314,7 @@ const addTestData = () => {
   saveToStorage();
 };
 
+// render and display sideboard, header and dashboard on initial load
 renderSidebar();
 loadDashboard();
+document.body.classList.add('loaded');

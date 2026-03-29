@@ -1,10 +1,10 @@
-import { getProjects, getProjectById } from '../models/app';
+import { getProjects, getProjectById, clearProjects } from '../models/app';
 import { createButton } from '../components/button';
 import { createStatCard } from '../components/statCard';
 import { format, isPast, isToday } from 'date-fns';
 import autoAnimate from '@formkit/auto-animate';
 
-function dashboardPage(onProjectSelect, onAddTestData) {
+function dashboardPage(onProjectSelect, onAddTestData, onRefresh) {
   const contentWrapper = document.querySelector('.content');
   contentWrapper.innerHTML = '';
 
@@ -30,7 +30,8 @@ function dashboardPage(onProjectSelect, onAddTestData) {
     classes: ['btn-small', 'red'],
     onClick: () => {
       localStorage.clear();
-      location.reload();
+      clearProjects();
+      onRefresh();
     },
   });
 
@@ -39,7 +40,7 @@ function dashboardPage(onProjectSelect, onAddTestData) {
     classes: ['btn-small'],
     onClick: () => {
       onAddTestData();
-      location.reload();
+      onRefresh();
     },
   });
 

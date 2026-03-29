@@ -26,6 +26,11 @@ export const deleteProject = (id) => {
   );
 };
 
+// clear all projects
+export const clearProjects = () => {
+  projects = [];
+};
+
 // find a project by ID
 export const getProjectById = (id) => {
   return projects.find((project) => project.id === id);
