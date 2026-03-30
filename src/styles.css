@@ -120,7 +120,13 @@ nav {
     gap: 0.5rem;
 }
 
-.sidebar:has(> :nth-child(2)) > :last-child {
+.sidebar-projects {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.sidebar:has(.sidebar-projects > :first-child) > :last-child {
     margin-top: 1rem;
 }
 
@@ -175,7 +181,7 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.65em;
+    gap: 0.40em;
     flex-direction: row-reverse;
     background: transparent;
     border: 1px solid var(--primary-color);
@@ -765,4 +771,100 @@ nav {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--muted-color);
+}
+
+/* ================================
+   mobile
+   ================================ */
+
+@media (max-width: 768px) {
+    body {
+        grid-template-columns: 1fr;
+        grid-template-rows: 60px auto 1fr;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    header {
+        grid-column: 1;
+        grid-template-columns: 1fr auto;
+        padding: 0 1rem;
+    }
+
+    .logo {
+        justify-content: flex-start;
+        font-size: 22px;
+    }
+
+    nav {
+        grid-column: 2;
+        gap: 1em;
+        padding: 0;
+    }
+
+    .nav-btn {
+        font-size: 18px;
+        margin-top:4px;
+    }
+
+    .sidebar {
+        grid-column: 1;
+        grid-row: 2;
+        border-right: none;
+        border-bottom: 2px solid var(--lighter-background);
+        flex-direction: row;
+        padding: 0.75rem 1rem;
+        height: auto;
+        gap: 0.25rem;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .sidebar-projects {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+        margin-left:-0.5em;
+    }
+
+    .sidebar:has(.sidebar-projects > :first-child) > :last-child {
+        margin-top: 0;
+        min-width: 132px;
+    }
+
+    .sidebar-project-btn {
+        font-size: 14px;
+    }
+
+    .btn-secondary {
+        font-size: 14px;
+        padding: 0.35em 0.75em;
+    }
+
+    .content {
+        grid-column: 1;
+        grid-row: 3;
+        width: 100%;
+        padding: 1rem;
+        box-sizing: border-box;
+    }
+
+    .stats-container {
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+    }
+
+    .stat-card {
+        width: calc(50% - 0.5rem);
+    }
+
+    .modal {
+        width: 90vw;
+        top: 0;
+    }
+
+    .dashboard-wrapper, .about-wrapper {
+        margin-left: 0;
+    }
 }
