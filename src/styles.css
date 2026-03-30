@@ -813,7 +813,7 @@ nav {
         border-right: none;
         border-bottom: 2px solid var(--lighter-background);
         flex-direction: row;
-        padding: 0.75rem 1rem;
+        padding: 0.75rem 1rem 2rem;
         height: auto;
         gap: 0.25rem;
         align-items: center;
@@ -829,16 +829,22 @@ nav {
 
     .sidebar:has(.sidebar-projects > :first-child) > :last-child {
         margin-top: 0;
-        min-width: 132px;
+        min-width: 130px;
+        padding-left:0.2em;
     }
 
     .sidebar-project-btn {
         font-size: 14px;
     }
 
-    .btn-secondary {
+    .btn-secondary, .btn-primary, .btn-danger {
         font-size: 14px;
         padding: 0.35em 0.75em;
+    }
+
+    .btn-secondary svg {
+        width: 20px;
+        height: 20px;
     }
 
     .content {
