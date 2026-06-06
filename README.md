@@ -1,6 +1,6 @@
 # todo app
 
-A project-based todo app built as part of [The Odin Project](https://www.theodinproject.com) JavaScript curriculum. Pure vanilla JS — no frameworks, just modules and factory functions.
+A project-based todo app built as part of [The Odin Project](https://www.theodinproject.com) JavaScript curriculum. Vanilla JS — no frameworks, just modules and factory functions.
 
 ## What it does
 
